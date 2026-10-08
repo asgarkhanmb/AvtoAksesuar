@@ -25,10 +25,10 @@ Sistem **.NET 8, C#, WPF və SQLite** texnologiyaları üzərində qurulub və i
 
 ## 🖥️ Əsas ekran
 
-> Aşağıdakı ekran görüntüsünü repository-də `assets/screenshots/main-window.png` yolunda saxlayın.
+> Aşağıdakı ekran görüntüsünü repository-də `assets/main/main-window.png` yolunda saxlayın.
 
 <p align="center">
-  <img src="assets/screenshots/main-window.png" alt="Avto Aksesuar Satış Sistemi - Əsas ekran" width="100%">
+  <img src="assets/main/main-window.png" alt="Avto Aksesuar Satış Sistemi - Əsas ekran" width="100%">
 </p>
 
 ---

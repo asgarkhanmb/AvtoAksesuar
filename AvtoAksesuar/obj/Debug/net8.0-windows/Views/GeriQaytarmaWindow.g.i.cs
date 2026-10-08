@@ -140,7 +140,7 @@ namespace PcKod.UI.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/AvtoAksesuar.UI;component/views/geriqaytarmawindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/AvtoAksesuar.UI;V1.0.0.0;component/views/geriqaytarmawindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Views\GeriQaytarmaWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

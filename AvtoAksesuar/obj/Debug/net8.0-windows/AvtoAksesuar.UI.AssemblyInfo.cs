@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AvtoAksesuar.UI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9e8d29802aae87e32b0d73af42235bfbb2b5ba8d")]
 [assembly: System.Reflection.AssemblyProductAttribute("AvtoAksesuar.UI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AvtoAksesuar.UI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

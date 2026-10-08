@@ -148,8 +148,8 @@ namespace PcKod.UI.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/AvtoAksesuar.UI;component/views/m%c9%99hsullar%c4%b1n%c4%b0dar%c9%99edilm%c9%99s" +
-                    "iwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/AvtoAksesuar.UI;V1.0.0.0;component/views/m%c9%99hsullar%c4%b1n%c4%b0dar%c9%99edi" +
+                    "lm%c9%99siwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Views\MəhsullarınİdarəEdilməsiWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

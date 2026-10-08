@@ -68,7 +68,7 @@ namespace PcKod.UI.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/AvtoAksesuar.UI;component/views/firma%c6%8flav%c9%99etwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/AvtoAksesuar.UI;V1.0.0.0;component/views/firma%c6%8flav%c9%99etwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Views\FirmaƏlavəEtWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

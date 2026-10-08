@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "FLF1uR9F950=",
+  "dgSpecHash": "j7D/sFY5BZo=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Əsgərxan\\Desktop\\New folder (2)\\AvtoAksesuar\\AvtoAksesuar.UI.csproj",
+  "projectFilePath": "C:\\Users\\Əsgərxan\\Desktop\\satis sistemi\\AvtoAksesuar\\AvtoAksesuar.UI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Əsgərxan\\.nuget\\packages\\closedxml\\0.105.0\\closedxml.0.105.0.nupkg.sha512",
     "C:\\Users\\Əsgərxan\\.nuget\\packages\\closedxml.parser\\2.0.0\\closedxml.parser.2.0.0.nupkg.sha512",
