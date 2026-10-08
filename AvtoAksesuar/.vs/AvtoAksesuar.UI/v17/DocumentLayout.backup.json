@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\\u018Fsg\u0259rxan\\Desktop\\New folder (2)\\AvtoAksesuar\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D40FA82B-7AD1-494F-B77C-A66E9A167F29}|AvtoAksesuar.UI.csproj|c:\\users\\\u0259sg\u0259rxan\\desktop\\new folder (2)\\avtoaksesuar\\license.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{D40FA82B-7AD1-494F-B77C-A66E9A167F29}|AvtoAksesuar.UI.csproj|solutionrelative:license.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D40FA82B-7AD1-494F-B77C-A66E9A167F29}|AvtoAksesuar.UI.csproj|c:\\users\\\u0259sg\u0259rxan\\desktop\\new folder (2)\\avtoaksesuar\\readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{D40FA82B-7AD1-494F-B77C-A66E9A167F29}|AvtoAksesuar.UI.csproj|solutionrelative:readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "LICENSE.txt",
+              "DocumentMoniker": "C:\\Users\\\u018Fsg\u0259rxan\\Desktop\\New folder (2)\\AvtoAksesuar\\LICENSE.txt",
+              "RelativeDocumentMoniker": "LICENSE.txt",
+              "ToolTip": "C:\\Users\\\u018Fsg\u0259rxan\\Desktop\\New folder (2)\\AvtoAksesuar\\LICENSE.txt",
+              "RelativeToolTip": "LICENSE.txt",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2026-10-08T15:59:50.336Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "README.md",
+              "DocumentMoniker": "C:\\Users\\\u018Fsg\u0259rxan\\Desktop\\New folder (2)\\AvtoAksesuar\\README.md",
+              "RelativeDocumentMoniker": "README.md",
+              "ToolTip": "C:\\Users\\\u018Fsg\u0259rxan\\Desktop\\New folder (2)\\AvtoAksesuar\\README.md",
+              "RelativeToolTip": "README.md",
+              "ViewState": "AgIAAD4BAAAAAAAAAAAAAE4BAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-10-08T15:59:04.884Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

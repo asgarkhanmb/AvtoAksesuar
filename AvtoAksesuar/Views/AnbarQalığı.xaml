@@ -1,0 +1,157 @@
+﻿<Window x:Class="PcKod.UI.Views.StokSayfasi"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Anbar Qalığı və Yenilənməsi"
+        Height="650" Width="1000"
+        Background="#1A1D21"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Sol tərəf: Anbar siyahısı və axtarış -->
+        <Grid Grid.Column="0" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Margin="0,0,0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="ANBAR QALIĞI"
+                           Foreground="#00FF41"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           VerticalAlignment="Center"/>
+
+            </Grid>
+
+            <StackPanel Grid.Row="1" Margin="0,0,0,10">
+                <TextBlock Text="Məhsul və ya barkod üzrə axtarış:"
+                           Foreground="#A0A0A0"
+                           FontSize="12"
+                           Margin="0,0,0,5"/>
+
+                <TextBox Name="txtStokAra"
+                         Background="#252525"
+                         Foreground="White"
+                         BorderBrush="#333"
+                         Padding="8"
+                         TextChanged="txtStokAra_TextChanged"/>
+            </StackPanel>
+
+            <DataGrid Name="dgStok"
+                      Grid.Row="2"
+                      Background="#21252B"
+                      Foreground="White"
+                      RowBackground="#21252B"
+                      AlternatingRowBackground="#252525"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="Horizontal"
+                      HorizontalGridLinesBrush="#333"
+                      BorderThickness="0"
+                      FontSize="15"
+                      SelectionChanged="dgStok_SelectionChanged">
+
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#252525"/>
+                        <Setter Property="Foreground" Value="#00FF41"/>
+                        <Setter Property="Padding" Value="10,5"/>
+                    </Style>
+
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Padding" Value="5"/>
+                    </Style>
+                </DataGrid.Resources>
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Barkod"
+                                        Binding="{Binding Barkod}"
+                                        Width="120"/>
+
+                    <DataGridTextColumn Header="Məhsulun adı"
+                                        Binding="{Binding UrunAdi}"
+                                        Width="2*"/>
+
+                    <DataGridTextColumn Header="Qalıq miqdarı"
+                                        Binding="{Binding StokMiktari}"
+                                        Width="1*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <!-- Sağ tərəf: Anbar yeniləmə paneli -->
+        <StackPanel Grid.Column="1"
+                    Margin="10,20,20,20"
+                    Background="#21252B">
+
+            <StackPanel Margin="15">
+
+                <TextBlock Text="Anbara mədaxil"
+                           FontSize="20"
+                           FontWeight="Bold"
+                           Foreground="#E1E1E1"
+                           Margin="0,0,0,20"/>
+
+                <TextBlock Text="Seçilmiş məhsul:"
+                           Foreground="#A0A0A0"
+                           Margin="0,0,0,5"/>
+
+                <TextBox Name="txtSeciliUrun"
+                         Background="#1A1D21"
+                         Foreground="#00FF41"
+                         IsReadOnly="True"
+                         Padding="8"
+                         Margin="0,0,0,15"
+                         FontWeight="Bold"/>
+
+                <TextBlock Text="Mövcud qalıq:"
+                           Foreground="#A0A0A0"
+                           Margin="0,0,0,5"/>
+
+                <TextBox Name="txtMevcutStok"
+                         Background="#1A1D21"
+                         Foreground="White"
+                         IsReadOnly="True"
+                         Padding="8"
+                         Margin="0,0,0,15"/>
+
+                <TextBlock Text="Daxil olan mal / Əlavə ediləcək miqdar (+):"
+                           Foreground="#F1C40F"
+                           Margin="0,0,0,5"
+                           FontWeight="Bold"/>
+
+                <TextBox Name="txtYeniStok"
+                         Background="#252525"
+                         Foreground="White"
+                         BorderBrush="#F1C40F"
+                         Padding="10"
+                         FontSize="16"
+                         Margin="0,0,0,20"/>
+
+                <Button Name="btnStokGuncelle"
+                        Content="📦 ANBARA ƏLAVƏ ET"
+                        Background="#28A745"
+                        Foreground="White"
+                        Height="50"
+                        FontWeight="Bold"
+                        Cursor="Hand"
+                        Click="btnStokGuncelle_Click"/>
+
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
+

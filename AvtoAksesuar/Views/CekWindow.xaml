@@ -1,0 +1,472 @@
+﻿<Window x:Class="PcKod.UI.Views.CekWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Satış Çeki"
+        Height="650"
+        Width="310"
+        MinHeight="500"
+        WindowStartupLocation="CenterOwner"
+        Background="#DCDCDC">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="65"/>
+        </Grid.RowDefinitions>
+
+
+        <!-- ========================================================= -->
+        <!-- ÇEK -->
+        <!-- ========================================================= -->
+
+        <ScrollViewer Grid.Row="0"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+
+            <!--
+                Xprinter XP-Q806K:
+                Kağız eni: 80 mm
+                Real çap sahəsi: təxminən 72 mm
+                WPF ölçüsü: təxminən 272 px
+            -->
+
+            <Border Width="272"
+                    Margin="5"
+                    Padding="10,10,10,8"
+                    Background="White"
+                    HorizontalAlignment="Center">
+
+                <StackPanel Name="stkCek">
+
+
+                    <!-- ================================================= -->
+                    <!-- MAĞAZA -->
+                    <!-- ================================================= -->
+
+                    <TextBlock x:Name="txtMagazaAdi"
+                               Text="AVTO AKSESUAR"
+                               Foreground="#111111"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Center"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap"/>
+
+
+                    <TextBlock Text="SATIŞ ÇEKİ"
+                               Foreground="#333333"
+                               FontSize="9"
+                               FontWeight="SemiBold"
+                               HorizontalAlignment="Center"
+                               TextAlignment="Center"
+                               Margin="0,2,0,7"/>
+
+
+                    <!-- ================================================= -->
+                    <!-- ÜNVAN -->
+                    <!-- ================================================= -->
+
+                    <TextBlock Name="txtUnvan"
+                               Text="Ünvan: Bakı şəhəri, Yasamal rayonu&#10;2 nömrəli Tibb Kollecinin qarşısı"
+                               Foreground="#222222"
+                               FontSize="8"
+                               HorizontalAlignment="Center"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap"
+                               Margin="0,0,0,2"/>
+
+
+                    <!-- ================================================= -->
+                    <!-- TELEFON -->
+                    <!-- ================================================= -->
+
+                    <TextBlock Name="txtTelefon"
+                               Text="Tel: 050 443 47 11 | 050 722 70 76"
+                               Foreground="#222222"
+                               FontSize="8"
+                               HorizontalAlignment="Center"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap"
+                               Margin="0,2,0,7"/>
+
+
+                    <!-- ================================================= -->
+                    <!-- AYIRICI -->
+                    <!-- ================================================= -->
+
+                    <Separator Margin="0,1,0,6"
+                               Background="#222222"/>
+
+
+                    <!-- ================================================= -->
+                    <!-- ÇEK MƏLUMATLARI -->
+                    <!-- ================================================= -->
+
+                    <Grid>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <StackPanel>
+
+                            <TextBlock Name="txtCekNo"
+                                       Text="Çek №: 000001"
+                                       Foreground="#111111"
+                                       FontSize="8"
+                                       FontWeight="SemiBold"/>
+
+                            <TextBlock Name="txtTarix"
+                                       Text="Tarix: 24.09.2026"
+                                       Foreground="#333333"
+                                       FontSize="8"
+                                       Margin="0,2,0,0"/>
+
+                        </StackPanel>
+
+
+                        <Border Grid.Column="1"
+                                Background="#111111"
+                                Padding="6,3"
+                                CornerRadius="2"
+                                VerticalAlignment="Center">
+
+                            <TextBlock Name="txtOdeme"
+                                       Text="NAĞD"
+                                       Foreground="White"
+                                       FontSize="8"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center"/>
+
+                        </Border>
+
+                    </Grid>
+
+
+                    <!-- ================================================= -->
+                    <!-- AYIRICI -->
+                    <!-- ================================================= -->
+
+                    <Separator Margin="0,6,0,5"
+                               Background="#222222"/>
+
+
+                    <!-- ================================================= -->
+                    <!-- MƏHSUL BAŞLIĞI -->
+                    <!-- ================================================= -->
+
+                    <Grid Margin="0,0,0,3">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="32"/>
+                            <ColumnDefinition Width="58"/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <TextBlock Text="MƏHSUL"
+                                   Foreground="#111111"
+                                   FontSize="7.5"
+                                   FontWeight="Bold"/>
+
+
+                        <TextBlock Text="MİQ."
+                                   Grid.Column="1"
+                                   Foreground="#111111"
+                                   FontSize="7.5"
+                                   FontWeight="Bold"
+                                   TextAlignment="Center"/>
+
+
+                        <TextBlock Text="MƏBLƏĞ"
+                                   Grid.Column="2"
+                                   Foreground="#111111"
+                                   FontSize="7.5"
+                                   FontWeight="Bold"
+                                   TextAlignment="Right"/>
+
+                    </Grid>
+
+
+                    <!-- ================================================= -->
+                    <!-- MƏHSULLAR -->
+                    <!-- ================================================= -->
+
+                    <ItemsControl Name="icMhsullar">
+
+                        <ItemsControl.ItemTemplate>
+
+                            <DataTemplate>
+
+                                <Grid Margin="0,2">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="32"/>
+                                        <ColumnDefinition Width="58"/>
+                                    </Grid.ColumnDefinitions>
+
+
+                                    <!-- MƏHSUL -->
+
+                                    <TextBlock Text="{Binding UrunAdi}"
+                                               Foreground="#111111"
+                                               FontSize="8"
+                                               TextWrapping="Wrap"
+                                               VerticalAlignment="Center"
+                                               Margin="0,0,3,0"/>
+
+
+                                    <!-- MİQDAR -->
+
+                                    <TextBlock Text="{Binding Miktar, StringFormat={}{0:N2}}"
+                                               Grid.Column="1"
+                                               Foreground="#222222"
+                                               FontSize="8"
+                                               TextAlignment="Center"
+                                               VerticalAlignment="Center"/>
+
+
+                                    <!-- MƏBLƏĞ -->
+
+                                    <TextBlock Text="{Binding ToplamTutar, StringFormat={}{0:N2} AZN}"
+                                               Grid.Column="2"
+                                               Foreground="#111111"
+                                               FontSize="8"
+                                               FontWeight="SemiBold"
+                                               TextAlignment="Right"
+                                               VerticalAlignment="Center"/>
+
+                                </Grid>
+
+                            </DataTemplate>
+
+                        </ItemsControl.ItemTemplate>
+
+                    </ItemsControl>
+
+
+                    <!-- ================================================= -->
+                    <!-- AYIRICI -->
+                    <!-- ================================================= -->
+
+                    <Separator Margin="0,6,0,5"
+                               Background="#222222"/>
+
+
+                    <!-- ================================================= -->
+                    <!-- ARA CƏM -->
+                    <!-- ================================================= -->
+
+                    <Grid Margin="0,1">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <TextBlock Text="Cəm:"
+                                   Foreground="#333333"
+                                   FontSize="8"/>
+
+
+                        <TextBlock Name="txtAraCem"
+                                   Grid.Column="1"
+                                   Text="0.00 AZN"
+                                   Foreground="#111111"
+                                   FontSize="8"
+                                   FontWeight="SemiBold"/>
+
+                    </Grid>
+
+
+                    <!-- ================================================= -->
+                    <!-- ENDİRİM / FƏRQ -->
+                    <!-- ================================================= -->
+
+                    <Grid Name="grdFerq"
+                          Margin="0,2">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <TextBlock Name="txtFerqBasliq"
+                                   Text="Endirim:"
+                                   Foreground="#333333"
+                                   FontSize="8"/>
+
+
+                        <TextBlock Name="txtFerq"
+                                   Grid.Column="1"
+                                   Text="0.00 AZN"
+                                   Foreground="#111111"
+                                   FontSize="8"/>
+
+                    </Grid>
+
+
+                    <!-- ================================================= -->
+                    <!-- AYIRICI -->
+                    <!-- ================================================= -->
+
+                    <Separator Margin="0,5,0,6"
+                               Background="#222222"/>
+
+
+                    <!-- ================================================= -->
+                    <!-- YEKUN -->
+                    <!-- ================================================= -->
+
+                    <Grid>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <TextBlock Text="YEKUN"
+                                   Foreground="#111111"
+                                   FontSize="13"
+                                   FontWeight="Bold"/>
+
+
+                        <TextBlock Name="txtCem"
+                                   Grid.Column="1"
+                                   Text="0.00 AZN"
+                                   Foreground="#111111"
+                                   FontSize="13"
+                                   FontWeight="Bold"/>
+
+                    </Grid>
+
+
+                    <!-- ================================================= -->
+                    <!-- ÖDƏNİŞ ÜSULU -->
+                    <!-- ================================================= -->
+
+                    <Grid Margin="0,6,0,0">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <TextBlock Text="Ödəniş üsulu:"
+                                   Foreground="#444444"
+                                   FontSize="8"/>
+
+
+                        <TextBlock Name="txtOdemeAlt"
+                                   Grid.Column="1"
+                                   Text="Nağd"
+                                   Foreground="#111111"
+                                   FontSize="8"
+                                   FontWeight="Bold"/>
+
+                    </Grid>
+
+
+                    <!-- ================================================= -->
+                    <!-- ALT AYIRICI -->
+                    <!-- ================================================= -->
+
+                    <Separator Margin="0,9,0,6"
+                               Background="#222222"/>
+
+
+                    <!-- ================================================= -->
+                    <!-- TƏŞƏKKÜR -->
+                    <!-- ================================================= -->
+
+                    <TextBlock Text="TƏŞƏKKÜR EDİRİK!"
+                               Foreground="#111111"
+                               FontSize="10"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Center"
+                               TextAlignment="Center"/>
+
+
+                    <TextBlock Text="Yenidən gözləyirik"
+                               Foreground="#444444"
+                               FontSize="8"
+                               HorizontalAlignment="Center"
+                               TextAlignment="Center"
+                               Margin="0,2,0,0"/>
+
+
+                    <!-- ================================================= -->
+                    <!-- TELEFONLAR -->
+                    <!-- ================================================= -->
+
+                    <TextBlock Text="050 443 47 11 • 050 722 70 76"
+                               Foreground="#222222"
+                               FontSize="7.5"
+                               FontWeight="SemiBold"
+                               HorizontalAlignment="Center"
+                               TextAlignment="Center"
+                               Margin="0,7,0,0"/>
+
+
+                    <!-- ================================================= -->
+                    <!-- ALT MƏLUMAT -->
+                    <!-- ================================================= -->
+
+                    <TextBlock Name="txtAltMelumat"
+                               Text="AVTO AKSESUAR"
+                               Foreground="#555555"
+                               FontSize="7"
+                               HorizontalAlignment="Center"
+                               TextAlignment="Center"
+                               Margin="0,3,0,0"/>
+
+
+                    <!-- ================================================= -->
+                    <!-- TERMAL ÇEK SONU -->
+                    <!-- ================================================= -->
+
+                    <TextBlock Text="------------------------------"
+                               Foreground="#111111"
+                               FontSize="7"
+                               HorizontalAlignment="Center"
+                               Margin="0,5,0,0"/>
+
+                </StackPanel>
+
+            </Border>
+
+        </ScrollViewer>
+
+
+        <!-- ========================================================= -->
+        <!-- ÇAP DÜYMƏSİ -->
+        <!-- ========================================================= -->
+
+        <Border Grid.Row="1"
+                Background="#EEEEEE"
+                Padding="7">
+
+            <Button Name="btnCapEt"
+                    Content="🖨  ÇEKİ ÇAP ET"
+                    Height="42"
+                    Background="#27AE60"
+                    Foreground="White"
+                    BorderThickness="0"
+                    FontSize="13"
+                    FontWeight="Bold"
+                    Click="btnCapEt_Click"
+                    Cursor="Hand"/>
+
+        </Border>
+
+    </Grid>
+
+</Window>

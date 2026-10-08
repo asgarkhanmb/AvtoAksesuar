@@ -1,0 +1,361 @@
+﻿<Window x:Class="PcKod.UI.Views.UrunListesiWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Məhsulların İdarə Edilməsi - SatisSistemi"
+        Height="700"
+        Width="1150"
+        WindowStartupLocation="CenterScreen"
+        Background="#1A1D21">
+
+    <Grid Background="#1A1D21">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2.2*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <!-- ====================================================== -->
+        <!-- SOL TƏRƏF -->
+        <!-- ====================================================== -->
+
+        <Grid Grid.Column="0"
+              Margin="20">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+
+            <!-- GERİ -->
+            <Button Content="⬅ ANA SƏHİFƏYƏ QAYIT"
+                    HorizontalAlignment="Left"
+                    Background="Transparent"
+                    Foreground="#666"
+                    BorderThickness="0"
+                    FontSize="12"
+                    Click="btnGeri_Click"
+                    Cursor="Hand"
+                    Margin="0,0,0,10"/>
+
+
+            <!-- AXTARIŞ -->
+            <StackPanel Grid.Row="1"
+                        Margin="0,0,0,10">
+
+                <TextBlock Text="Məhsul və ya barkod üzrə axtarış:"
+                           Foreground="#00FF41"
+                           FontSize="12"
+                           Margin="0,0,0,5"/>
+
+                <TextBox Name="txtHizliAra"
+                         Background="#252525"
+                         Foreground="White"
+                         BorderBrush="#333"
+                         Padding="8"
+                         TextChanged="txtHizliAra_TextChanged"/>
+
+            </StackPanel>
+
+
+            <!-- MƏHSULLAR CƏDVƏLİ -->
+            <DataGrid Grid.Row="2"
+                      Name="dgUrunler"
+                      AutoGenerateColumns="False"
+                      Background="#21252B"
+                      RowBackground="#21252B"
+                      AlternatingRowBackground="#252A30"
+                      Foreground="White"
+                      SelectionChanged="dgUrunler_SelectionChanged"
+                      IsReadOnly="True"
+                      HeadersVisibility="Column"
+                      CanUserAddRows="False"
+                      CanUserDeleteRows="False"
+                      GridLinesVisibility="Horizontal"
+                      BorderBrush="#333"
+                      BorderThickness="1">
+
+                <DataGrid.Resources>
+
+                    <!-- BAŞLIQLAR -->
+                    <Style TargetType="DataGridColumnHeader">
+
+                        <Setter Property="Background"
+                                Value="#252525"/>
+
+                        <Setter Property="Foreground"
+                                Value="#00FF41"/>
+
+                        <Setter Property="Padding"
+                                Value="10,7"/>
+
+                        <Setter Property="FontWeight"
+                                Value="Bold"/>
+
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Center"/>
+
+                    </Style>
+
+
+                    <!-- CELL -->
+                    <Style TargetType="DataGridCell">
+
+                        <Setter Property="Foreground"
+                                Value="White"/>
+
+                        <Setter Property="Padding"
+                                Value="5"/>
+
+                    </Style>
+
+                </DataGrid.Resources>
+
+
+                <DataGrid.Columns>
+
+                    <!-- BARKOD -->
+                    <DataGridTextColumn Header="Barkod"
+                                        Binding="{Binding Barkod}"
+                                        Width="110"/>
+
+
+                    <!-- MƏHSUL ADI -->
+                    <DataGridTextColumn Header="Məhsulun adı"
+                                        Binding="{Binding UrunAdi}"
+                                        Width="2*"/>
+
+
+                    <!-- ÖLÇÜ VAHİDİ -->
+                    <DataGridTextColumn Header="Ölçü vahidi"
+                                        Binding="{Binding BirimTipiMetni}"
+                                        Width="100"/>
+
+
+                    <!-- ALIŞ QİYMƏTİ -->
+                    <DataGridTextColumn Header="Alış qiyməti"
+                                        Binding="{Binding AlisFiyati, StringFormat='\{0:N2\} ₼'}"
+                                        Width="110"/>
+
+
+                    <!-- SATIŞ QİYMƏTİ -->
+                    <DataGridTextColumn Header="Satış qiyməti"
+                                        Binding="{Binding SatisFiyati, StringFormat='\{0:N2\} ₼'}"
+                                        Width="110"/>
+
+
+                    <!-- STOK SAYI -->
+                    <DataGridTextColumn Header="Stok sayı"
+                                        Binding="{Binding StokMiktari}"
+                                        Width="90"/>
+
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+        </Grid>
+
+
+        <!-- ====================================================== -->
+        <!-- SAĞ TƏRƏF -->
+        <!-- ====================================================== -->
+
+        <Border Grid.Column="1"
+                Margin="10,20,20,20"
+                Background="#21252B"
+                CornerRadius="5">
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+
+                <StackPanel Margin="20">
+
+
+                    <!-- BAŞLIQ -->
+                    <TextBlock Text="Məhsul əməliyyatları"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Foreground="#E1E1E1"
+                               Margin="0,0,0,20"/>
+
+
+                    <!-- BARKOD -->
+                    <TextBlock Text="Barkod nömrəsi:"
+                               Foreground="#A0A0A0"
+                               Margin="0,0,0,5"/>
+
+                    <TextBox Name="txtBarkod"
+                             Background="#1A1D21"
+                             Foreground="White"
+                             BorderBrush="#333"
+                             Padding="8"
+                             Margin="0,0,0,15"/>
+
+
+                    <!-- MƏHSUL ADI -->
+                    <TextBlock Text="Məhsulun adı:"
+                               Foreground="#A0A0A0"
+                               Margin="0,0,0,5"/>
+
+                    <TextBox Name="txtUrunAdi"
+                             Background="#1A1D21"
+                             Foreground="White"
+                             BorderBrush="#333"
+                             Padding="8"
+                             Margin="0,0,0,15"/>
+
+
+                    <!-- QİYMƏTLƏR -->
+                    <Grid Margin="0,0,0,15">
+
+                        <Grid.ColumnDefinitions>
+
+                            <ColumnDefinition Width="*"/>
+
+                            <ColumnDefinition Width="10"/>
+
+                            <ColumnDefinition Width="*"/>
+
+                        </Grid.ColumnDefinitions>
+
+
+                        <!-- ALIŞ -->
+                        <StackPanel Grid.Column="0">
+
+                            <TextBlock Text="Alış qiyməti:"
+                                       Foreground="#A0A0A0"
+                                       Margin="0,0,0,5"/>
+
+                            <TextBox Name="txtAlisFiyati"
+                                     Background="#1A1D21"
+                                     Foreground="White"
+                                     BorderBrush="#333"
+                                     Padding="8"/>
+
+                        </StackPanel>
+
+
+                        <!-- SATIŞ -->
+                        <StackPanel Grid.Column="2">
+
+                            <TextBlock Text="Satış qiyməti:"
+                                       Foreground="#A0A0A0"
+                                       Margin="0,0,0,5"/>
+
+                            <TextBox Name="txtSatisFiyati"
+                                     Background="#1A1D21"
+                                     Foreground="White"
+                                     BorderBrush="#333"
+                                     Padding="8"/>
+
+                        </StackPanel>
+
+                    </Grid>
+
+
+                    <!-- STOK SAYI -->
+                    <TextBlock Text="Məhsul sayı:"
+                               Foreground="#A0A0A0"
+                               Margin="0,0,0,5"/>
+
+                    <TextBox Name="txtStokMiktari"
+                             Background="#1A1D21"
+                             Foreground="White"
+                             BorderBrush="#333"
+                             Padding="8"
+                             Margin="0,0,0,15"
+                             PreviewTextInput="txtStokMiktari_PreviewTextInput"/>
+
+
+                    <!-- ÖLÇÜ VAHİDİ -->
+                    <TextBlock Text="Satış ölçü vahidi:"
+                               Foreground="#A0A0A0"
+                               Margin="0,0,0,5"/>
+
+                    <ComboBox Name="cmbBirim"
+                              Background="#1A1D21"
+                              Foreground="Black"
+                              BorderBrush="#333"
+                              Height="35"
+                              Margin="0,0,0,25">
+
+                        <ComboBoxItem Content="Ədəd"/>
+
+                        <ComboBoxItem Content="Kiloqram / Qram"/>
+
+                    </ComboBox>
+
+
+                    <!-- YADDA SAXLA -->
+                    <Button Name="btnKaydet"
+                            Content="💾 YADDA SAXLA / YENİLƏ"
+                            Background="#28A745"
+                            Foreground="White"
+                            BorderThickness="0"
+                            Height="45"
+                            Click="btnKaydet_Click"
+                            FontWeight="Bold"
+                            Cursor="Hand"/>
+
+                    <!-- SİL -->
+                    <Button Name="btnSilIlk"
+                            Content="🗑️ MƏHSULU SİL"
+                            Background="#DC3545"
+                            Foreground="White"
+                            BorderThickness="0"
+                            Height="35"
+                            Margin="0,15,0,0"
+                            Click="btnSilIlk_Click"
+                            Cursor="Hand"/>
+
+
+                    <!-- SİLMƏ TƏSDİQİ -->
+                    <StackPanel Name="pnlSilOnay"
+                                Visibility="Collapsed"
+                                Margin="0,10,0,0">
+
+
+                        <TextBlock Text="Məhsulu silmək üçün şifrəni daxil edin:"
+                                   Foreground="#A0A0A0"
+                                   FontSize="12"
+                                   Margin="0,0,0,5"/>
+
+
+                        <PasswordBox Name="txtSilSifre"
+                                     Background="#1A1D21"
+                                     Foreground="White"
+                                     BorderBrush="#333"
+                                     Padding="7"/>
+
+
+                        <Button Content="SİLMƏNİ TƏSDİQLƏ"
+                                Background="#C0392B"
+                                Foreground="White"
+                                BorderThickness="0"
+                                Click="btnSilOnay_Click"
+                                Margin="0,5,0,0"
+                                Height="30"
+                                FontWeight="Bold"
+                                Cursor="Hand"/>
+
+
+                        <Button Content="Ləğv et"
+                                Background="Transparent"
+                                Foreground="#888"
+                                Click="btnSilIptal_Click"
+                                BorderThickness="0"
+                                Height="30"
+                                Cursor="Hand"/>
+
+                    </StackPanel>
+
+                </StackPanel>
+
+            </ScrollViewer>
+
+        </Border>
+
+    </Grid>
+
+</Window>
