@@ -4,15 +4,16 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-
 using Microsoft.Data.Sqlite;
 using PcKod.UI.Models;
+using PcKod.UI.Data;
 
 namespace PcKod.UI.Views
 {
     public partial class UrunListesiWindow : Window
     {
-        private const string ConnectionString = "Data Source=PcKod.db";
+        private string ConnectionString =>
+    DatabaseHelper.ConnectionString;
 
         // =========================================================
         // CONSTRUCTOR

@@ -20,11 +20,6 @@ namespace PcKod.UI.Views
         private readonly CultureInfo azCulture =
             new CultureInfo("az-Latn-AZ");
 
-
-        // ============================================================
-        // CONSTRUCTOR
-        // ============================================================
-
         public GeriQaytarmaWindow()
         {
             InitializeComponent();
@@ -33,7 +28,6 @@ namespace PcKod.UI.Views
 
             SatislariYukle();
         }
-
 
         // ============================================================
         // SATIŞLARI YÜKLƏ
@@ -46,17 +40,14 @@ namespace PcKod.UI.Views
                 satislar.Clear();
 
                 DateTime tarix =
-                    dpTarix.SelectedDate?.Date
-                    ?? DateTime.Today;
+                    dpTarix.SelectedDate?.Date ?? DateTime.Today;
 
-                string tarixText =
-                    tarix.ToString(
-                        "yyyy-MM-dd",
-                        CultureInfo.InvariantCulture);
+                string tarixText = tarix.ToString(
+                    "yyyy-MM-dd",
+                    CultureInfo.InvariantCulture);
 
-                using (var db =
-                    new SqliteConnection(
-                        PcKod.UI.Data.  DatabaseHelper.ConnectionString))
+                using (var db = new SqliteConnection(
+                    PcKod.UI.Data.DatabaseHelper.ConnectionString))
                 {
                     db.Open();
 
@@ -78,49 +69,36 @@ namespace PcKod.UI.Views
                           AND ToplamTutar > 0
                         ORDER BY Id DESC";
 
-                    using (var cmd =
-                        new SqliteCommand(sql, db))
+                    using (var cmd = new SqliteCommand(sql, db))
                     {
                         cmd.Parameters.AddWithValue(
                             "@tarix",
                             tarixText + "%");
 
-                        using (var reader =
-                            cmd.ExecuteReader())
+                        using (var reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {
                                 long id = 0;
 
-                                if (!reader.IsDBNull(
-                                    reader.GetOrdinal("Id")))
-                                {
-                                    long.TryParse(
-                                        reader["Id"].ToString(),
-                                        out id);
-                                }
+                                long.TryParse(
+                                    reader["Id"]?.ToString(),
+                                    out id);
 
                                 string urunAdi =
-                                    reader["UrunAdi"]?.ToString()
-                                    ?? "";
+                                    reader["UrunAdi"]?.ToString() ?? "";
 
-                                double miktar =
-                                    ParseMiqdar(
-                                        reader["Miktar"]);
+                                double originalMiqdar =
+                                    ParseMiqdar(reader["Miktar"]);
 
-                                decimal toplam =
-                                    ParseDecimal(
-                                        reader["ToplamTutar"]);
+                                decimal originalMebleg =
+                                    ParseDecimal(reader["ToplamTutar"]);
 
                                 string odeme =
-                                    reader["OdemeYontemi"]
-                                        ?.ToString()
-                                    ?? "";
+                                    reader["OdemeYontemi"]?.ToString() ?? "";
 
                                 string tarixTextDb =
-                                    reader["Tarih"]
-                                        ?.ToString()
-                                    ?? "";
+                                    reader["Tarih"]?.ToString() ?? "";
 
                                 DateTime tarixDate;
 
@@ -133,6 +111,8 @@ namespace PcKod.UI.Views
                                 {
                                     if (!DateTime.TryParse(
                                         tarixTextDb,
+                                        CultureInfo.InvariantCulture,
+                                        DateTimeStyles.None,
                                         out tarixDate))
                                     {
                                         tarixDate = tarix;
@@ -140,26 +120,17 @@ namespace PcKod.UI.Views
                                 }
 
                                 string satisQrupId =
-                                    reader["SatisQrupId"]
-                                        ?.ToString()
-                                    ?? "";
+                                    reader["SatisQrupId"]?.ToString() ?? "";
 
-                                if (string.IsNullOrWhiteSpace(
-                                    satisQrupId))
+                                if (string.IsNullOrWhiteSpace(satisQrupId))
                                 {
-                                    satisQrupId =
-                                        "OLD-" + id;
+                                    satisQrupId = "OLD-" + id;
                                 }
 
-                                long cekNomresi =
-                                    GetCekNomresi(
-                                        db,
-                                        satisQrupId,
-                                        id);
-
-                                // ====================================================
-                                // BU SATIŞDAN ARTİQ NƏ QƏDƏR QAYTARILIB?
-                                // ====================================================
+                                long cekNomresi = GetCekNomresi(
+                                    db,
+                                    satisQrupId,
+                                    id);
 
                                 double qaytarilanMiqdar =
                                     GetArtıqQaytarilanMiqdar(
@@ -169,48 +140,52 @@ namespace PcKod.UI.Views
                                         satisQrupId);
 
                                 double qalanMiqdar =
-                                    miktar -
-                                    qaytarilanMiqdar;
+                                    originalMiqdar - qaytarilanMiqdar;
 
                                 if (qalanMiqdar < 0)
                                     qalanMiqdar = 0;
 
-                                // Tam qaytarılıbsa artıq siyahıda göstərmə
                                 if (qalanMiqdar <= 0)
                                     continue;
 
-                                satislar.Add(
-                                    new SatisQaytarmaModel
-                                    {
-                                        Id = id,
+                                // 1 ƏDƏDİN QİYMƏTİ İLK SATIŞDAN HESABLANIR.
+                                decimal vahidQiymet = originalMiqdar > 0
+                                    ? originalMebleg / (decimal)originalMiqdar
+                                    : 0m;
 
-                                        CekNomresi =
-                                            cekNomresi,
+                                // CƏDVƏLDƏ QALAN MİQDARA UYĞUN MƏBLƏĞ.
+                                // Məsələn: 2 ədəd x 2 AZN = 4 AZN.
+                                // 1 ədəd qaytarıldıqdan sonra 1 ədəd x 2 AZN = 2 AZN.
+                                decimal qalanMebleg = Math.Round(
+                                    vahidQiymet * (decimal)qalanMiqdar,
+                                    2,
+                                    MidpointRounding.AwayFromZero);
 
-                                        SatisQrupId =
-                                            satisQrupId,
+                                satislar.Add(new SatisQaytarmaModel
+                                {
+                                    Id = id,
+                                    CekNomresi = cekNomresi,
+                                    SatisQrupId = satisQrupId,
+                                    UrunAdi = urunAdi,
 
-                                        UrunAdi =
-                                            urunAdi,
+                                    // QALAN QAYTARILA BİLƏN MİQDAR
+                                    Miktar = qalanMiqdar,
 
-                                        Miktar =
-                                            qalanMiqdar,
+                                    // İLK SATIŞDAKI MİQDAR
+                                    OriginalMiktar = originalMiqdar,
 
-                                        OriginalMiktar =
-                                            miktar,
+                                    ArtıqQaytarilanMiqdar =
+                                        qaytarilanMiqdar,
 
-                                        ArtıqQaytarilanMiqdar =
-                                            qaytarilanMiqdar,
+                                    // QALAN MİQDARA UYĞUN MƏBLƏĞ
+                                    ToplamTutar = qalanMebleg,
 
-                                        ToplamTutar =
-                                            toplam,
+                                    // İLK SATIŞIN DƏYİŞMƏYƏN MƏBLƏĞİ
+                                    OriginalToplamTutar = originalMebleg,
 
-                                        OdemeYontemi =
-                                            odeme,
-
-                                        Tarih =
-                                            tarixDate
-                                    });
+                                    OdemeYontemi = odeme,
+                                    Tarih = tarixDate
+                                });
                             }
                         }
                     }
@@ -219,18 +194,12 @@ namespace PcKod.UI.Views
                 secilenSatis = null;
 
                 dgSatishlar.SelectedItem = null;
-
                 dgSatishlar.ItemsSource = null;
-
                 dgSatishlar.ItemsSource = satislar;
 
                 txtSecilenUrun.Text = "-";
-
-                txtSecilenCek.Text =
-                    "Çek №: -";
-
-                txtQaytarmaMiqdar.Text =
-                    "1";
+                txtSecilenCek.Text = "Çek №: -";
+                txtQaytarmaMiqdar.Text = "1";
 
                 txtAxtarisNeticesi.Text =
                     $"{satislar.Count} məhsul satışı";
@@ -252,9 +221,8 @@ namespace PcKod.UI.Views
             }
         }
 
-
         // ============================================================
-        // BU SATIŞDAN ƏVVƏL NƏ QƏDƏR QAYTARILIB?
+        // ARTİQ QAYTARILAN MİQDAR
         // ============================================================
 
         private double GetArtıqQaytarilanMiqdar(
@@ -266,22 +234,16 @@ namespace PcKod.UI.Views
             try
             {
                 string returnPrefix =
-                    "RETURN-FOR-" +
-                    originalSaleId +
-                    "-";
+                    "RETURN-FOR-" + originalSaleId + "-";
 
                 string sql = @"
-                    SELECT COALESCE(
-                        SUM(Miktar),
-                        0
-                    )
+                    SELECT COALESCE(SUM(Miktar), 0)
                     FROM Satislar
                     WHERE UrunAdi = @returnName
                       AND SatisQrupId LIKE @returnPrefix
                       AND ToplamTutar < 0";
 
-                using (var cmd =
-                    new SqliteCommand(sql, db))
+                using (var cmd = new SqliteCommand(sql, db))
                 {
                     cmd.Parameters.AddWithValue(
                         "@returnName",
@@ -291,10 +253,7 @@ namespace PcKod.UI.Views
                         "@returnPrefix",
                         returnPrefix + "%");
 
-                    object result =
-                        cmd.ExecuteScalar();
-
-                    return ParseMiqdar(result);
+                    return ParseMiqdar(cmd.ExecuteScalar());
                 }
             }
             catch
@@ -303,9 +262,8 @@ namespace PcKod.UI.Views
             }
         }
 
-
         // ============================================================
-        // ÇEK NÖMRƏSİNİ TAP
+        // ÇEK NÖMRƏSİ
         // ============================================================
 
         private long GetCekNomresi(
@@ -314,9 +272,7 @@ namespace PcKod.UI.Views
             long fallbackId)
         {
             if (string.IsNullOrWhiteSpace(satisQrupId))
-            {
                 return fallbackId;
-            }
 
             try
             {
@@ -326,18 +282,13 @@ namespace PcKod.UI.Views
                     WHERE SatisQrupId = @q
                       AND UrunAdi NOT LIKE 'GERİ QAYTARMA - %'";
 
-                using (var cmd =
-                    new SqliteCommand(sql, db))
+                using (var cmd = new SqliteCommand(sql, db))
                 {
-                    cmd.Parameters.AddWithValue(
-                        "@q",
-                        satisQrupId);
+                    cmd.Parameters.AddWithValue("@q", satisQrupId);
 
-                    object result =
-                        cmd.ExecuteScalar();
+                    object result = cmd.ExecuteScalar();
 
-                    if (result != null &&
-                        result != DBNull.Value)
+                    if (result != null && result != DBNull.Value)
                     {
                         return Convert.ToInt64(result);
                     }
@@ -350,35 +301,27 @@ namespace PcKod.UI.Views
             return fallbackId;
         }
 
-
         // ============================================================
         // DECIMAL OXU
         // ============================================================
 
         private decimal ParseDecimal(object value)
         {
-            if (value == null ||
-                value == DBNull.Value)
-            {
+            if (value == null || value == DBNull.Value)
                 return 0m;
-            }
 
             if (value is decimal decimalValue)
                 return decimalValue;
 
             if (value is double doubleValue)
-            {
                 return Convert.ToDecimal(
                     doubleValue,
                     CultureInfo.InvariantCulture);
-            }
 
             if (value is float floatValue)
-            {
                 return Convert.ToDecimal(
                     floatValue,
                     CultureInfo.InvariantCulture);
-            }
 
             if (value is int intValue)
                 return intValue;
@@ -386,9 +329,7 @@ namespace PcKod.UI.Views
             if (value is long longValue)
                 return longValue;
 
-            string text =
-                value.ToString()?.Trim()
-                ?? "";
+            string text = value.ToString()?.Trim() ?? "";
 
             if (decimal.TryParse(
                 text,
@@ -411,18 +352,14 @@ namespace PcKod.UI.Views
             return 0m;
         }
 
-
         // ============================================================
         // MİQDAR OXU
         // ============================================================
 
         private double ParseMiqdar(object value)
         {
-            if (value == null ||
-                value == DBNull.Value)
-            {
+            if (value == null || value == DBNull.Value)
                 return 0;
-            }
 
             if (value is double d)
                 return d;
@@ -439,10 +376,7 @@ namespace PcKod.UI.Views
             if (value is long l)
                 return l;
 
-            string text =
-                value.ToString()?.Trim()
-                ?? "";
-
+            string text = value.ToString()?.Trim() ?? "";
             text = text.Replace(",", ".");
 
             if (double.TryParse(
@@ -466,7 +400,6 @@ namespace PcKod.UI.Views
             return 0;
         }
 
-
         // ============================================================
         // TARİX DƏYİŞƏNDƏ
         // ============================================================
@@ -487,7 +420,6 @@ namespace PcKod.UI.Views
             SatislariYukle();
         }
 
-
         // ============================================================
         // AXTAR
         // ============================================================
@@ -499,11 +431,6 @@ namespace PcKod.UI.Views
             Axtar();
         }
 
-
-        // ============================================================
-        // ENTER İLƏ AXTAR
-        // ============================================================
-
         private void txtAxtaris_KeyDown(
             object sender,
             KeyEventArgs e)
@@ -511,36 +438,23 @@ namespace PcKod.UI.Views
             if (e.Key == Key.Enter)
             {
                 Axtar();
-
                 e.Handled = true;
             }
         }
 
-
-        // ============================================================
-        // AXTARIŞ
-        // ============================================================
-
         private void Axtar()
         {
             string cekText =
-                txtCekNomresiAxtar.Text?
-                    .Trim()
-                ?? "";
+                txtCekNomresiAxtar.Text?.Trim() ?? "";
 
             string mehsulText =
-                txtMehsulAxtar.Text?
-                    .Trim()
-                ?? "";
+                txtMehsulAxtar.Text?.Trim() ?? "";
 
-            IEnumerable<SatisQaytarmaModel> netice =
-                satislar;
+            IEnumerable<SatisQaytarmaModel> netice = satislar;
 
             if (!string.IsNullOrWhiteSpace(cekText))
             {
-                if (!long.TryParse(
-                    cekText,
-                    out long cekNomresi))
+                if (!long.TryParse(cekText, out long cekNomresi))
                 {
                     MessageBox.Show(
                         "Çek nömrəsini düzgün daxil edin.",
@@ -549,58 +463,37 @@ namespace PcKod.UI.Views
                         MessageBoxImage.Warning);
 
                     txtCekNomresiAxtar.Focus();
-
                     return;
                 }
 
-                netice =
-                    netice.Where(
-                        x =>
-                            x.CekNomresi ==
-                            cekNomresi);
+                netice = netice.Where(
+                    x => x.CekNomresi == cekNomresi);
             }
 
             if (!string.IsNullOrWhiteSpace(mehsulText))
             {
-                netice =
-                    netice.Where(
-                        x =>
-                            x.UrunAdi.Contains(
-                                mehsulText,
-                                StringComparison.OrdinalIgnoreCase));
+                netice = netice.Where(
+                    x => x.UrunAdi.Contains(
+                        mehsulText,
+                        StringComparison.OrdinalIgnoreCase));
             }
 
-            var siyahi =
-                netice.ToList();
+            var siyahi = netice.ToList();
 
             secilenSatis = null;
-
             dgSatishlar.SelectedItem = null;
 
             txtSecilenUrun.Text = "-";
-
-            txtSecilenCek.Text =
-                "Çek №: -";
-
-            txtQaytarmaMiqdar.Text =
-                "1";
+            txtSecilenCek.Text = "Çek №: -";
+            txtQaytarmaMiqdar.Text = "1";
 
             dgSatishlar.ItemsSource = null;
-
             dgSatishlar.ItemsSource = siyahi;
 
-            if (siyahi.Count == 0)
-            {
-                txtAxtarisNeticesi.Text =
-                    "Nəticə tapılmadı.";
-            }
-            else
-            {
-                txtAxtarisNeticesi.Text =
-                    $"{siyahi.Count} nəticə tapıldı.";
-            }
+            txtAxtarisNeticesi.Text = siyahi.Count == 0
+                ? "Nəticə tapılmadı."
+                : $"{siyahi.Count} nəticə tapıldı.";
         }
-
 
         // ============================================================
         // AXTARIŞI TƏMİZLƏ
@@ -611,29 +504,21 @@ namespace PcKod.UI.Views
             RoutedEventArgs e)
         {
             txtCekNomresiAxtar.Text = "";
-
             txtMehsulAxtar.Text = "";
 
             secilenSatis = null;
 
             dgSatishlar.SelectedItem = null;
-
             dgSatishlar.ItemsSource = null;
-
             dgSatishlar.ItemsSource = satislar;
 
             txtAxtarisNeticesi.Text =
                 $"{satislar.Count} məhsul satışı";
 
             txtSecilenUrun.Text = "-";
-
-            txtSecilenCek.Text =
-                "Çek №: -";
-
-            txtQaytarmaMiqdar.Text =
-                "1";
+            txtSecilenCek.Text = "Çek №: -";
+            txtQaytarmaMiqdar.Text = "1";
         }
-
 
         // ============================================================
         // DATAGRID SEÇİMİ
@@ -644,25 +529,17 @@ namespace PcKod.UI.Views
             SelectionChangedEventArgs e)
         {
             var selected =
-                dgSatishlar.SelectedItem
-                as SatisQaytarmaModel;
+                dgSatishlar.SelectedItem as SatisQaytarmaModel;
 
             if (selected == null)
                 return;
 
             secilenSatis = selected;
 
-            txtSecilenUrun.Text =
-                selected.UrunAdi;
-
-            txtSecilenCek.Text =
-                "Çek №: " +
-                selected.CekNomresi;
-
-            txtQaytarmaMiqdar.Text =
-                "1";
+            txtSecilenUrun.Text = selected.UrunAdi;
+            txtSecilenCek.Text = "Çek №: " + selected.CekNomresi;
+            txtQaytarmaMiqdar.Text = "1";
         }
-
 
         // ============================================================
         // DATAGRID SƏTRİNƏ KLİKLƏ SEÇ
@@ -679,38 +556,29 @@ namespace PcKod.UI.Views
             {
                 if (element is DataGridRow row)
                 {
-                    var item =
-                        row.Item as SatisQaytarmaModel;
+                    var item = row.Item as SatisQaytarmaModel;
 
                     if (item != null)
                     {
                         dgSatishlar.SelectedItem = item;
-
                         row.IsSelected = true;
-
                         dgSatishlar.ScrollIntoView(item);
 
                         secilenSatis = item;
 
-                        txtSecilenUrun.Text =
-                            item.UrunAdi;
-
+                        txtSecilenUrun.Text = item.UrunAdi;
                         txtSecilenCek.Text =
-                            "Çek №: " +
-                            item.CekNomresi;
+                            "Çek №: " + item.CekNomresi;
 
-                        txtQaytarmaMiqdar.Text =
-                            "1";
+                        txtQaytarmaMiqdar.Text = "1";
                     }
 
                     break;
                 }
 
-                element =
-                    VisualTreeHelper.GetParent(element);
+                element = VisualTreeHelper.GetParent(element);
             }
         }
-
 
         // ============================================================
         // GERİ QAYTAR
@@ -721,13 +589,10 @@ namespace PcKod.UI.Views
             RoutedEventArgs e)
         {
             var selected =
-                dgSatishlar.SelectedItem
-                as SatisQaytarmaModel;
+                dgSatishlar.SelectedItem as SatisQaytarmaModel;
 
             if (selected != null)
-            {
                 secilenSatis = selected;
-            }
 
             if (secilenSatis == null)
             {
@@ -740,17 +605,10 @@ namespace PcKod.UI.Views
                 return;
             }
 
-            // ========================================================
-            // MİQDAR
-            // ========================================================
-
             string miqdarText =
-                txtQaytarmaMiqdar.Text?
-                    .Trim()
-                ?? "";
+                txtQaytarmaMiqdar.Text?.Trim() ?? "";
 
-            miqdarText =
-                miqdarText.Replace(",", ".");
+            miqdarText = miqdarText.Replace(",", ".");
 
             if (!double.TryParse(
                 miqdarText,
@@ -765,7 +623,6 @@ namespace PcKod.UI.Views
                     MessageBoxImage.Warning);
 
                 txtQaytarmaMiqdar.Focus();
-
                 return;
             }
 
@@ -780,14 +637,11 @@ namespace PcKod.UI.Views
                 return;
             }
 
-            // Vacib:
-            // Buradakı Miktar artıq QALAN qaytarıla bilən miqdardır.
             if (qaytarmaMiqdar >
-                secilenSatis.Miktar)
+                secilenSatis.Miktar + 0.000001)
             {
                 MessageBox.Show(
-                    $"Maksimum {secilenSatis.Miktar:N2} " +
-                    $"miqdar geri qaytara bilərsiniz.",
+                    $"Maksimum {secilenSatis.Miktar:N2} miqdar geri qaytara bilərsiniz.",
                     "Yanlış miqdar",
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning);
@@ -795,81 +649,124 @@ namespace PcKod.UI.Views
                 return;
             }
 
-            // ========================================================
-            // VAHİD QİYMƏT
-            // ========================================================
+            // ORİJİNAL SATIŞ MƏLUMATLARINI BAZADAN OXU
+            decimal originalMebleg = 0m;
+            double originalMiqdar = 0;
 
-            decimal vahidQiymet =
-                secilenSatis.OriginalMiktar == 0
-                    ? 0m
-                    : secilenSatis.ToplamTutar /
-                      (decimal)secilenSatis.OriginalMiktar;
+            try
+            {
+                using (var qiymetDb = new SqliteConnection(
+                    PcKod.UI.Data.DatabaseHelper.ConnectionString))
+                {
+                    qiymetDb.Open();
 
-            vahidQiymet =
-                Math.Round(
-                    vahidQiymet,
-                    2,
-                    MidpointRounding.AwayFromZero);
+                    const string sql = @"
+                        SELECT Miktar, ToplamTutar
+                        FROM Satislar
+                        WHERE Id = @id
+                          AND Miktar > 0
+                          AND ToplamTutar > 0
+                        LIMIT 1";
 
-            decimal qaytarmaMeblegi =
-                Math.Round(
-                    vahidQiymet *
-                    (decimal)qaytarmaMiqdar,
-                    2,
-                    MidpointRounding.AwayFromZero);
+                    using (var cmd = new SqliteCommand(
+                        sql,
+                        qiymetDb))
+                    {
+                        cmd.Parameters.AddWithValue(
+                            "@id",
+                            secilenSatis.Id);
 
-            // ========================================================
-            // TƏSDİQ
-            // ========================================================
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (!reader.Read())
+                            {
+                                MessageBox.Show(
+                                    "Orijinal satış məlumatı tapılmadı.",
+                                    "Xəta",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Warning);
 
-            var result =
+                                return;
+                            }
+
+                            originalMiqdar =
+                                ParseMiqdar(reader["Miktar"]);
+
+                            originalMebleg =
+                                ParseDecimal(reader["ToplamTutar"]);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(
-                    $"Çek №: {secilenSatis.CekNomresi}\n" +
-                    $"Məhsul: {secilenSatis.UrunAdi}\n" +
-                    $"Miqdar: {qaytarmaMiqdar:N2}\n" +
-                    $"Qaytarılan məbləğ: " +
-                    $"{qaytarmaMeblegi.ToString(
-                        "N2",
-                        azCulture)} AZN\n\n" +
-                    "Məhsul anbara geri əlavə ediləcək.\n\n" +
-                    "Əməliyyatı təsdiqləyirsiniz?",
-                    "Geri qaytarma təsdiqi",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Question);
+                    "Satış məbləği oxunarkən xəta baş verdi:\n\n" +
+                    ex.Message,
+                    "Xəta",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+
+                return;
+            }
+
+            if (originalMiqdar <= 0 || originalMebleg <= 0)
+            {
+                MessageBox.Show(
+                    "Orijinal satışın miqdarı və ya məbləği düzgün deyil.",
+                    "Xəta",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                return;
+            }
+
+            // VAHİD QİYMƏT İLK SATIŞ MƏBLƏĞİNDƏN HESABLANIR.
+            decimal vahidQiymet = Math.Round(
+                originalMebleg / (decimal)originalMiqdar,
+                2,
+                MidpointRounding.AwayFromZero);
+
+            // QAYTARILAN MİQDARIN MƏBLƏĞİ
+            decimal qaytarmaMeblegi = Math.Round(
+                vahidQiymet * (decimal)qaytarmaMiqdar,
+                2,
+                MidpointRounding.AwayFromZero);
+
+            var result = MessageBox.Show(
+                $"Çek №: {secilenSatis.CekNomresi}\n" +
+                $"Məhsul: {secilenSatis.UrunAdi}\n" +
+                $"Miqdar: {qaytarmaMiqdar:N2}\n" +
+                $"1 ədədin qiyməti: {vahidQiymet.ToString("N2", azCulture)} AZN\n" +
+                $"Qaytarılan məbləğ: {qaytarmaMeblegi.ToString("N2", azCulture)} AZN\n\n" +
+                "Məhsul anbara geri əlavə ediləcək.\n\n" +
+                "Əməliyyatı təsdiqləyirsiniz?",
+                "Geri qaytarma təsdiqi",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
 
             if (result != MessageBoxResult.Yes)
                 return;
 
-            // ========================================================
-            // DATABASE
-            // ========================================================
-
-            using (var db =
-                new SqliteConnection(
-                  PcKod.UI.Data.DatabaseHelper.ConnectionString))
+            using (var db = new SqliteConnection(
+                PcKod.UI.Data.DatabaseHelper.ConnectionString))
             {
                 db.Open();
 
-                using (var transaction =
-                    db.BeginTransaction())
+                using (var transaction = db.BeginTransaction())
                 {
                     try
                     {
-                        // =================================================
-                        // MƏHSULUN BARKODUNU TAP
-                        // =================================================
-
                         string barkod = null;
 
-                        using (var findCmd =
-                            new SqliteCommand(
-                                @"SELECT Barkod
-                                  FROM Urunler
-                                  WHERE LOWER(TRIM(UrunAdi))
-                                      = LOWER(TRIM(@urunAdi))
-                                  LIMIT 1",
-                                db,
-                                transaction))
+                        using (var findCmd = new SqliteCommand(
+                            @"SELECT Barkod
+                              FROM Urunler
+                              WHERE LOWER(TRIM(UrunAdi)) =
+                                    LOWER(TRIM(@urunAdi))
+                              LIMIT 1",
+                            db,
+                            transaction))
                         {
                             findCmd.Parameters.AddWithValue(
                                 "@urunAdi",
@@ -881,37 +778,28 @@ namespace PcKod.UI.Views
                             if (resultBarkod != null &&
                                 resultBarkod != DBNull.Value)
                             {
-                                barkod =
-                                    resultBarkod.ToString();
+                                barkod = resultBarkod.ToString();
                             }
                         }
 
-                        // =================================================
-                        // MƏHSUL TAPILMADI
-                        // =================================================
-
                         if (string.IsNullOrWhiteSpace(barkod))
                         {
+                            transaction.Rollback();
+
                             MessageBox.Show(
                                 "Bu məhsul anbar məhsulları arasında tapılmadı.\n\n" +
                                 "Məhsul adı:\n" +
                                 secilenSatis.UrunAdi +
-                                "\n\n" +
-                                "Məhsulun anbar qeydiyyatı olmadığı üçün " +
+                                "\n\nMəhsulun anbar qeydiyyatı olmadığı üçün " +
                                 "geri qaytarma həyata keçirilmədi.",
                                 "Məhsul tapılmadı",
                                 MessageBoxButton.OK,
                                 MessageBoxImage.Warning);
 
-                            transaction.Rollback();
-
                             return;
                         }
 
-                        // =================================================
-                        // YENİ QAYTARMA MIQDARI
-                        // =================================================
-
+                        // QAYTARMA MİQDARINI BAZADAKI QEYDLƏRLƏ YENİDƏN YOXLAYIRIQ.
                         double artiqQaytarilib =
                             GetArtıqQaytarilanMiqdar(
                                 db,
@@ -920,8 +808,7 @@ namespace PcKod.UI.Views
                                 secilenSatis.SatisQrupId);
 
                         double maksimumQaytarma =
-                            secilenSatis.OriginalMiktar -
-                            artiqQaytarilib;
+                            originalMiqdar - artiqQaytarilib;
 
                         if (maksimumQaytarma < 0)
                             maksimumQaytarma = 0;
@@ -929,30 +816,25 @@ namespace PcKod.UI.Views
                         if (qaytarmaMiqdar >
                             maksimumQaytarma + 0.000001)
                         {
+                            transaction.Rollback();
+
                             MessageBox.Show(
-                                $"Bu satışdan maksimum " +
-                                $"{maksimumQaytarma:N2} miqdar qaytarmaq olar.",
+                                $"Bu satışdan maksimum {maksimumQaytarma:N2} miqdar qaytarmaq olar.",
                                 "Qaytarma limiti",
                                 MessageBoxButton.OK,
                                 MessageBoxImage.Warning);
 
-                            transaction.Rollback();
-
+                            SatislariYukle();
                             return;
                         }
 
-                        // =================================================
                         // ANBARA GERİ ƏLAVƏ ET
-                        // =================================================
-
-                        using (var stockCmd =
-                            new SqliteCommand(
-                                @"UPDATE Urunler
-                                  SET StokMiktari =
-                                      StokMiktari + @m
-                                  WHERE Barkod = @b",
-                                db,
-                                transaction))
+                        using (var stockCmd = new SqliteCommand(
+                            @"UPDATE Urunler
+                              SET StokMiktari = StokMiktari + @m
+                              WHERE Barkod = @b",
+                            db,
+                            transaction))
                         {
                             stockCmd.Parameters.AddWithValue(
                                 "@m",
@@ -972,45 +854,34 @@ namespace PcKod.UI.Views
                             }
                         }
 
-                        // =================================================
-                        // ÇOX VACİB:
-                        //
-                        // ORİJİNAL SATIŞA TOXUNMURUQ.
-                        //
-                        // DELETE YOXDUR.
-                        // UPDATE YOXDUR.
-                        //
-                        // Yalnız mənfi qaytarma sətri əlavə olunur.
-                        // =================================================
-
+                        // GERİ QAYTARMA SƏTRİ
                         string returnGroupId =
                             "RETURN-FOR-" +
                             secilenSatis.Id +
                             "-" +
                             secilenSatis.SatisQrupId;
 
-                        using (var returnCmd =
-                            new SqliteCommand(
-                                @"INSERT INTO Satislar
-                                  (
-                                      UrunAdi,
-                                      Miktar,
-                                      ToplamTutar,
-                                      OdemeYontemi,
-                                      Tarih,
-                                      SatisQrupId
-                                  )
-                                  VALUES
-                                  (
-                                      @a,
-                                      @m,
-                                      @t,
-                                      @y,
-                                      @d,
-                                      @q
-                                  )",
-                                db,
-                                transaction))
+                        using (var returnCmd = new SqliteCommand(
+                            @"INSERT INTO Satislar
+                              (
+                                  UrunAdi,
+                                  Miktar,
+                                  ToplamTutar,
+                                  OdemeYontemi,
+                                  Tarih,
+                                  SatisQrupId
+                              )
+                              VALUES
+                              (
+                                  @a,
+                                  @m,
+                                  @t,
+                                  @y,
+                                  @d,
+                                  @q
+                              )",
+                            db,
+                            transaction))
                         {
                             returnCmd.Parameters.AddWithValue(
                                 "@a",
@@ -1021,7 +892,6 @@ namespace PcKod.UI.Views
                                 "@m",
                                 qaytarmaMiqdar);
 
-                            // Mənfi məbləğ
                             returnCmd.Parameters.AddWithValue(
                                 "@t",
                                 -qaytarmaMeblegi);
@@ -1043,55 +913,32 @@ namespace PcKod.UI.Views
                             returnCmd.ExecuteNonQuery();
                         }
 
-                        // =================================================
-                        // COMMIT
-                        // =================================================
-
                         transaction.Commit();
-
-                        // =================================================
-                        // MESAJ
-                        // =================================================
 
                         MessageBox.Show(
                             "Məhsul uğurla geri qaytarıldı.\n\n" +
                             $"Çek №: {secilenSatis.CekNomresi}\n" +
                             $"Məhsul: {secilenSatis.UrunAdi}\n" +
                             $"Miqdar: {qaytarmaMiqdar:N2}\n" +
-                            $"Qaytarılan məbləğ: " +
-                            $"{qaytarmaMeblegi.ToString(
-                                "N2",
-                                azCulture)} AZN\n\n" +
+                            $"1 ədədin qiyməti: {vahidQiymet.ToString("N2", azCulture)} AZN\n" +
+                            $"Qaytarılan məbləğ: {qaytarmaMeblegi.ToString("N2", azCulture)} AZN\n\n" +
                             "Orijinal satış saxlanıldı.\n" +
                             "Məhsul anbara əlavə edildi.",
                             "Geri qaytarma tamamlandı",
                             MessageBoxButton.OK,
                             MessageBoxImage.Information);
 
-                        // =================================================
-                        // SİYAHINI YENİLƏ
-                        // =================================================
-
                         SatislariYukle();
 
                         secilenSatis = null;
-
                         dgSatishlar.SelectedItem = null;
 
-                        txtSecilenUrun.Text =
-                            "-";
+                        txtSecilenUrun.Text = "-";
+                        txtSecilenCek.Text = "Çek №: -";
+                        txtQaytarmaMiqdar.Text = "1";
 
-                        txtSecilenCek.Text =
-                            "Çek №: -";
-
-                        txtQaytarmaMiqdar.Text =
-                            "1";
-
-                        txtCekNomresiAxtar.Text =
-                            "";
-
-                        txtMehsulAxtar.Text =
-                            "";
+                        txtCekNomresiAxtar.Text = "";
+                        txtMehsulAxtar.Text = "";
                     }
                     catch (Exception ex)
                     {
@@ -1114,7 +961,6 @@ namespace PcKod.UI.Views
             }
         }
     }
-
 
     // ================================================================
     // MODEL
@@ -1139,7 +985,11 @@ namespace PcKod.UI.Views
         // ƏVVƏL QAYTARILMIŞ MİQDAR
         public double ArtıqQaytarilanMiqdar { get; set; }
 
+        // QALAN MİQDARA UYĞUN ÜMUMİ MƏBLƏĞ
         public decimal ToplamTutar { get; set; }
+
+        // ORİJİNAL SATIŞIN ÜMUMİ MƏBLƏĞİ
+        public decimal OriginalToplamTutar { get; set; }
 
         public string OdemeYontemi { get; set; } = "";
 
@@ -1149,8 +999,7 @@ namespace PcKod.UI.Views
         {
             get
             {
-                return Tarih.ToString(
-                    "dd.MM.yyyy HH:mm");
+                return Tarih.ToString("dd.MM.yyyy HH:mm");
             }
         }
     }

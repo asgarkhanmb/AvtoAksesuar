@@ -46,6 +46,15 @@
             <Setter Property="FontSize" Value="14"/>
         </Style>
 
+        <!-- CƏDVƏL MƏLUMATLARINI MƏRKƏZLƏŞDİR -->
+        <Style x:Key="CenteredCellText"
+               TargetType="{x:Type TextBlock}">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+
     </Window.Resources>
 
     <Grid Margin="15">
@@ -397,34 +406,26 @@
                                   GridLinesVisibility="Horizontal"
                                   HorizontalGridLinesBrush="#D9D9D9"
                                   HeadersVisibility="Column"
-                                  FontSize="13">
+                                  FontSize="13"
+                                  CanUserAddRows="False"
+                                  IsReadOnly="True">
 
                             <DataGrid.Resources>
 
-                                <Style TargetType="DataGridColumnHeader">
-
-                                    <Setter Property="Background"
-                                            Value="#EEEEEE"/>
-
-                                    <Setter Property="Foreground"
-                                            Value="#2E7D32"/>
-
-                                    <Setter Property="FontWeight"
-                                            Value="Bold"/>
-
-                                    <Setter Property="Padding"
-                                            Value="8,6"/>
-
+                                <Style TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="Background" Value="#EEEEEE"/>
+                                    <Setter Property="Foreground" Value="#2E7D32"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                    <Setter Property="Padding" Value="8,6"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                    <Setter Property="VerticalContentAlignment" Value="Center"/>
                                 </Style>
 
-                                <Style TargetType="DataGridCell">
-
-                                    <Setter Property="Foreground"
-                                            Value="Black"/>
-
-                                    <Setter Property="Padding"
-                                            Value="6"/>
-
+                                <Style TargetType="{x:Type DataGridCell}">
+                                    <Setter Property="Foreground" Value="Black"/>
+                                    <Setter Property="Padding" Value="6"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="VerticalContentAlignment" Value="Center"/>
                                 </Style>
 
                             </DataGrid.Resources>
@@ -433,32 +434,33 @@
 
                                 <DataGridTextColumn Header="№"
                                                     Binding="{Binding Id}"
-                                                    Width="Auto"/>
+                                                    Width="Auto"
+                                                    ElementStyle="{StaticResource CenteredCellText}"/>
 
-                                <!-- TARİX + SAAT -->
                                 <DataGridTextColumn Header="Tarix / Saat"
-                                                    Binding="{Binding Tarix, StringFormat='dd.MM.yyyy HH:mm'}"
-                                                    Width="150"/>
+                                                    Binding="{Binding Tarix, StringFormat={}{0:dd.MM.yyyy HH:mm}}"
+                                                    Width="150"
+                                                    ElementStyle="{StaticResource CenteredCellText}"/>
 
-                                <!-- MƏHSUL -->
                                 <DataGridTextColumn Header="Məhsulun adı"
                                                     Binding="{Binding UrunAdi}"
-                                                    Width="*"/>
+                                                    Width="*"
+                                                    ElementStyle="{StaticResource CenteredCellText}"/>
 
-                                <!-- MİQDAR -->
                                 <DataGridTextColumn Header="Miqdar"
                                                     Binding="{Binding Miktar}"
-                                                    Width="80"/>
+                                                    Width="80"
+                                                    ElementStyle="{StaticResource CenteredCellText}"/>
 
-                                <!-- ÖDƏNİŞ -->
                                 <DataGridTextColumn Header="Ödəniş növü"
                                                     Binding="{Binding OdemeTipi}"
-                                                    Width="100"/>
+                                                    Width="100"
+                                                    ElementStyle="{StaticResource CenteredCellText}"/>
 
-                                <!-- MƏBLƏĞ -->
                                 <DataGridTextColumn Header="Ümumi məbləğ"
-                                                    Binding="{Binding Toplam, StringFormat='\{0:N2\} ₼'}"
-                                                    Width="110"/>
+                                                    Binding="{Binding Toplam, StringFormat={}{0:N2} ₼}"
+                                                    Width="110"
+                                                    ElementStyle="{StaticResource CenteredCellText}"/>
 
                             </DataGrid.Columns>
 
@@ -501,34 +503,26 @@
                                   GridLinesVisibility="Horizontal"
                                   HorizontalGridLinesBrush="#D9D9D9"
                                   HeadersVisibility="Column"
-                                  FontSize="13">
+                                  FontSize="13"
+                                  CanUserAddRows="False"
+                                  IsReadOnly="True">
 
                             <DataGrid.Resources>
 
-                                <Style TargetType="DataGridColumnHeader">
-
-                                    <Setter Property="Background"
-                                            Value="#EEEEEE"/>
-
-                                    <Setter Property="Foreground"
-                                            Value="#F39C12"/>
-
-                                    <Setter Property="FontWeight"
-                                            Value="Bold"/>
-
-                                    <Setter Property="Padding"
-                                            Value="8,6"/>
-
+                                <Style TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="Background" Value="#EEEEEE"/>
+                                    <Setter Property="Foreground" Value="#F39C12"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                    <Setter Property="Padding" Value="8,6"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                    <Setter Property="VerticalContentAlignment" Value="Center"/>
                                 </Style>
 
-                                <Style TargetType="DataGridCell">
-
-                                    <Setter Property="Foreground"
-                                            Value="Black"/>
-
-                                    <Setter Property="Padding"
-                                            Value="6"/>
-
+                                <Style TargetType="{x:Type DataGridCell}">
+                                    <Setter Property="Foreground" Value="Black"/>
+                                    <Setter Property="Padding" Value="6"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="VerticalContentAlignment" Value="Center"/>
                                 </Style>
 
                             </DataGrid.Resources>
@@ -537,15 +531,18 @@
 
                                 <DataGridTextColumn Header="Məhsul"
                                                     Binding="{Binding UrunAdi}"
-                                                    Width="*"/>
+                                                    Width="*"
+                                                    ElementStyle="{StaticResource CenteredCellText}"/>
 
                                 <DataGridTextColumn Header="Miqdar"
                                                     Binding="{Binding Miktar}"
-                                                    Width="80"/>
+                                                    Width="80"
+                                                    ElementStyle="{StaticResource CenteredCellText}"/>
 
                                 <DataGridTextColumn Header="Məbləğ"
-                                                    Binding="{Binding Toplam, StringFormat='\{0:N2\} ₼'}"
-                                                    Width="100"/>
+                                                    Binding="{Binding Toplam, StringFormat={}{0:N2} ₼}"
+                                                    Width="100"
+                                                    ElementStyle="{StaticResource CenteredCellText}"/>
 
                             </DataGrid.Columns>
 
