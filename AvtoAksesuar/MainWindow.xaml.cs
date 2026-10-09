@@ -586,6 +586,117 @@ namespace PcKod.UI
                 }
             }
         }
+        // ============================================================
+        // MƏHSUL AXTARIŞI
+        // ============================================================
+
+        private void txtMehsulAxtar_TextChanged(
+            object sender,
+            TextChangedEventArgs e)
+        {
+            // Mətn dəyişdikdə əlavə əməliyyat aparılmır.
+            // Axtarış Enter düyməsi ilə başladılır.
+        }
+
+
+        // ============================================================
+        // MƏHSULU ADINA VƏ YA BARKODUNA GÖRƏ TAP
+        // ============================================================
+
+        private void txtMehsulAxtar_KeyDown(
+            object sender,
+            KeyEventArgs e)
+        {
+            if (e.Key != Key.Enter)
+                return;
+
+            string searchText =
+                txtMehsulAxtar.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(searchText))
+                return;
+
+            try
+            {
+                string barkod = null;
+
+                using (var db =
+                    new SqliteConnection(
+                        DatabaseHelper.ConnectionString))
+                {
+                    db.Open();
+
+                    using (var cmd =
+                        new SqliteCommand(
+                            @"SELECT Barkod
+                      FROM Urunler
+                      WHERE Barkod = @search
+                         OR UrunAdi LIKE @name
+                      ORDER BY
+                          CASE
+                              WHEN Barkod = @search THEN 0
+                              ELSE 1
+                          END
+                      LIMIT 1",
+                            db))
+                    {
+                        cmd.Parameters.AddWithValue(
+                            "@search",
+                            searchText);
+
+                        cmd.Parameters.AddWithValue(
+                            "@name",
+                            "%" + searchText + "%");
+
+                        object result =
+                            cmd.ExecuteScalar();
+
+                        if (result != null &&
+                            result != DBNull.Value)
+                        {
+                            barkod = result.ToString();
+                        }
+                    }
+                }
+
+                if (string.IsNullOrWhiteSpace(barkod))
+                {
+                    MessageBox.Show(
+                        "Axtarışa uyğun məhsul tapılmadı.",
+                        "Məhsul tapılmadı",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information);
+
+                    txtMehsulAxtar.SelectAll();
+                    txtMehsulAxtar.Focus();
+
+                    e.Handled = true;
+                    return;
+                }
+
+                // Mövcud barkod və stok yoxlama mexanizmindən istifadə et.
+                ProcessScannedInput(barkod);
+
+                txtMehsulAxtar.Clear();
+
+                txtBarkodOkuyucu.Focus();
+
+                e.Handled = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Məhsul axtarışı zamanı xəta baş verdi:\n\n" +
+                    ex.Message,
+                    "Sistem xətası",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+
+                txtMehsulAxtar.Focus();
+
+                e.Handled = true;
+            }
+        }
 
 
         // ============================================================
@@ -763,23 +874,35 @@ namespace PcKod.UI
             object sender,
             DataGridCellEditEndingEventArgs e)
         {
+            if (e.EditAction != DataGridEditAction.Commit)
+                return;
+
             Dispatcher.BeginInvoke(
-                new Action(
-                    () =>
+                new Action(() =>
+                {
+                    try
                     {
                         if (e.Column.Header?.ToString() == "Miqdar" &&
                             e.Row.Item is SəbətMəhsul editedItem)
                         {
-                            manualTotalAmounts.Remove(
-                                editedItem);
+                            manualTotalAmounts.Remove(editedItem);
                         }
 
                         CalculateTotal();
-
-                        dgSepet.Items.Refresh();
-                    }),
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(
+                            "Məhsul məlumatı yenilənərkən xəta baş verdi:\n\n" +
+                            ex.Message,
+                            "Sistem xətası",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error);
+                    }
+                }),
                 DispatcherPriority.Background);
         }
+
 
 
         // ============================================================
@@ -1710,19 +1833,6 @@ namespace PcKod.UI
             txtBarkodOkuyucu.Focus();
         }
 
-
-        // ============================================================
-        // TOPDAN SATIŞ
-        // ============================================================
-
-        private void btnToptanSatis_Click(
-            object sender,
-            RoutedEventArgs e)
-        {
-            new ToptanSatisWindow().ShowDialog();
-
-            txtBarkodOkuyucu.Focus();
-        }
 
 
         // ============================================================

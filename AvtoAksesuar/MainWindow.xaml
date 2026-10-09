@@ -1,847 +1,740 @@
 ﻿<Window x:Class="PcKod.UI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Avto Aksesuar - Satış Sistemi"
+        Title="Avto Aksesuar | Satış Sistemi"
         Height="750"
         Width="1150"
         MinHeight="700"
         MinWidth="1050"
         WindowStartupLocation="CenterScreen"
-        Background="{DynamicResource WindowBackgroundBrush}">
+        Background="{DynamicResource WindowBackgroundBrush}"
+        FontFamily="Segoe UI">
 
     <Window.Resources>
 
-        <!-- ===================================================== -->
-        <!-- TEMA RƏNGLƏRİ -->
-        <!-- ===================================================== -->
+        <!-- PREMIUM AÇIQ TEMA -->
+        <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#F1F5F9"/>
+        <SolidColorBrush x:Key="PanelBackgroundBrush" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="TextBrush" Color="#172033"/>
+        <SolidColorBrush x:Key="SecondaryTextBrush" Color="#64748B"/>
+        <SolidColorBrush x:Key="BorderBrushTheme" Color="#E2E8F0"/>
+        <SolidColorBrush x:Key="HeaderBackgroundBrush" Color="#F1F5F9"/>
+        <SolidColorBrush x:Key="HeaderTextBrush" Color="#475569"/>
+        <SolidColorBrush x:Key="GridLineBrush" Color="#E9EEF5"/>
+        <SolidColorBrush x:Key="AlternateRowBrush" Color="#F8FAFC"/>
+        <SolidColorBrush x:Key="HoverRowBrush" Color="#F0F7FF"/>
+        <SolidColorBrush x:Key="SelectedRowBrush" Color="#DBEAFE"/>
+        <SolidColorBrush x:Key="SelectedTextBrush" Color="#1D4ED8"/>
+        <SolidColorBrush x:Key="InputBackgroundBrush" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="InputBorderBrush" Color="#CBD5E1"/>
+        <SolidColorBrush x:Key="TotalTextBrush" Color="#15803D"/>
+        <SolidColorBrush x:Key="TotalAmountBrush" Color="#15803D"/>
 
-        <SolidColorBrush x:Key="WindowBackgroundBrush"
-                         Color="#F4F7FB"/>
-
-        <SolidColorBrush x:Key="PanelBackgroundBrush"
-                         Color="#FFFFFF"/>
-
-        <SolidColorBrush x:Key="TextBrush"
-                         Color="#263238"/>
-
-        <SolidColorBrush x:Key="SecondaryTextBrush"
-                         Color="#78909C"/>
-
-        <SolidColorBrush x:Key="BorderBrushTheme"
-                         Color="#D5DEE8"/>
-
-        <SolidColorBrush x:Key="HeaderBackgroundBrush"
-                         Color="#E8F1FA"/>
-
-        <SolidColorBrush x:Key="HeaderTextBrush"
-                         Color="#315A7D"/>
-
-        <SolidColorBrush x:Key="GridLineBrush"
-                         Color="#E4EAF0"/>
-
-        <SolidColorBrush x:Key="AlternateRowBrush"
-                         Color="#F8FAFD"/>
-
-        <SolidColorBrush x:Key="HoverRowBrush"
-                         Color="#EEF6FC"/>
-
-        <SolidColorBrush x:Key="SelectedRowBrush"
-                         Color="#DDEEFF"/>
-
-        <SolidColorBrush x:Key="SelectedTextBrush"
-                         Color="#1F4F73"/>
-
-        <SolidColorBrush x:Key="InputBackgroundBrush"
-                         Color="#FFFFFF"/>
-
-        <SolidColorBrush x:Key="InputBorderBrush"
-                         Color="#9CC2DF"/>
-
-        <SolidColorBrush x:Key="TotalTextBrush"
-                         Color="#2F6F9F"/>
-
-        <!-- ÜMUMİ MƏBLƏĞ ÜÇÜN AYRI RƏNG -->
-        <SolidColorBrush x:Key="TotalAmountBrush"
-                         Color="#2F6F9F"/>
-
-
-        <!-- ===================================================== -->
-        <!-- ÜMUMİ DÜYMƏ STİLİ -->
-        <!-- ===================================================== -->
-
-        <Style TargetType="Button">
-
-            <Setter Property="FontFamily"
-                    Value="Segoe UI"/>
-
-            <Setter Property="FontSize"
-                    Value="13"/>
-
-            <Setter Property="FontWeight"
-                    Value="SemiBold"/>
-
-            <Setter Property="Foreground"
-                    Value="#FFFFFF"/>
-
-            <Setter Property="BorderThickness"
-                    Value="0"/>
-
-            <Setter Property="Cursor"
-                    Value="Hand"/>
-
+        <!-- DÜYMƏ STİLLƏRİ -->
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Padding" Value="8,5"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="ButtonBorder"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="8"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                        Property="Opacity"
+                                        Value="0.86"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                        Property="Opacity"
+                                        Value="0.72"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="ButtonBorder"
+                                        Property="Opacity"
+                                        Value="0.45"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
+        <Style x:Key="BlueActionButton"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="#2563EB"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
 
-        <!-- ===================================================== -->
+        <Style x:Key="GreenActionButton"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="#16A34A"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style x:Key="PurpleActionButton"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="#7C3AED"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style x:Key="TealActionButton"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="#0F766E"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style x:Key="GrayActionButton"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="#475569"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style x:Key="OrangeActionButton"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="#EA580C"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style x:Key="RedActionButton"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="#DC2626"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
         <!-- TEXTBOX -->
-        <!-- ===================================================== -->
-
-        <Style TargetType="TextBox">
-
-            <Setter Property="FontFamily"
-                    Value="Segoe UI"/>
-
-            <Setter Property="Foreground"
-                    Value="{DynamicResource TextBrush}"/>
-
-            <Setter Property="Background"
-                    Value="{DynamicResource InputBackgroundBrush}"/>
-
-            <Setter Property="BorderBrush"
-                    Value="{DynamicResource BorderBrushTheme}"/>
-
-            <Setter Property="BorderThickness"
-                    Value="1"/>
-
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+            <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource InputBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8,5"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
 
-
-        <!-- ===================================================== -->
-        <!-- DATAGRID BAŞLIQ -->
-        <!-- ===================================================== -->
-
-        <Style TargetType="DataGridColumnHeader">
-
-            <Setter Property="Background"
-                    Value="{DynamicResource HeaderBackgroundBrush}"/>
-
-            <Setter Property="Foreground"
-                    Value="{DynamicResource HeaderTextBrush}"/>
-
-            <Setter Property="Padding"
-                    Value="10,8"/>
-
-            <Setter Property="FontWeight"
-                    Value="Bold"/>
-
-            <Setter Property="FontSize"
-                    Value="13"/>
-
-            <Setter Property="BorderBrush"
-                    Value="{DynamicResource BorderBrushTheme}"/>
-
-            <Setter Property="BorderThickness"
-                    Value="0,0,0,1"/>
-
+        <!-- CƏDVƏL BAŞLIĞI -->
+        <Style TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Background" Value="{DynamicResource HeaderBackgroundBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource HeaderTextBrush}"/>
+            <Setter Property="Padding" Value="6,12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushTheme}"/>
+            <Setter Property="BorderThickness" Value="0,0,1,1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
 
+        <!-- CƏDVƏL XANASI -->
+        <Style TargetType="{x:Type DataGridCell}">
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
 
-        <!-- ===================================================== -->
-        <!-- DATAGRID CELL -->
-        <!-- ===================================================== -->
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource SelectedRowBrush}"/>
+                    <Setter Property="Foreground" Value="{DynamicResource SelectedTextBrush}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
-        <Style TargetType="DataGridCell">
+        <!-- MƏHSUL ADI -->
+        <Style x:Key="ProductNameCellStyle"
+               TargetType="{x:Type TextBlock}">
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Padding" Value="3"/>
+        </Style>
 
-            <Setter Property="Foreground"
-                    Value="{DynamicResource TextBrush}"/>
+        <!-- MİQDAR VƏ QİYMƏT -->
+        <Style x:Key="CenteredCellTextStyle"
+               TargetType="{x:Type TextBlock}">
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
 
-            <Setter Property="Background"
-                    Value="{DynamicResource PanelBackgroundBrush}"/>
-
-            <Setter Property="BorderThickness"
-                    Value="0"/>
-
-            <Setter Property="Padding"
-                    Value="6"/>
-
+        <!-- REDAKTƏ EDİLƏN XANALAR -->
+        <Style x:Key="CenteredEditingTextBoxStyle"
+               TargetType="{x:Type TextBox}">
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="3"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="BorderBrush" Value="#3B82F6"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="Background" Value="#EFF6FF"/>
+            <Setter Property="Foreground" Value="#1D4ED8"/>
+            <Setter Property="MinWidth" Value="35"/>
         </Style>
 
     </Window.Resources>
 
-
-    <Grid Margin="10">
-
+    <Grid Margin="12">
         <Grid.ColumnDefinitions>
-
-            <ColumnDefinition Width="2.5*"/>
+            <ColumnDefinition Width="2.35*"/>
             <ColumnDefinition Width="1*"/>
-
         </Grid.ColumnDefinitions>
 
-
-        <!-- ===================================================== -->
-        <!-- SATIŞ SƏBƏTİ -->
-        <!-- ===================================================== -->
-
-        <GroupBox Header="CARİ SATIŞ SƏBƏTİ"
-                  Grid.Column="0"
-                  Foreground="{DynamicResource HeaderTextBrush}"
-                  BorderBrush="{DynamicResource BorderBrushTheme}"
-                  Background="{DynamicResource PanelBackgroundBrush}"
-                  Margin="5"
-                  FontWeight="Bold"
-                  FontSize="14">
-
-            <DataGrid Name="dgSepet"
-                      Background="{DynamicResource PanelBackgroundBrush}"
-                      Foreground="{DynamicResource TextBrush}"
-                      RowBackground="{DynamicResource PanelBackgroundBrush}"
-                      AlternatingRowBackground="{DynamicResource AlternateRowBrush}"
-                      AutoGenerateColumns="False"
-                      HeadersVisibility="Column"
-                      GridLinesVisibility="Horizontal"
-                      HorizontalGridLinesBrush="{DynamicResource GridLineBrush}"
-                      BorderThickness="0"
-                      FontSize="16"
-                      FontWeight="SemiBold"
-                      CellEditEnding="dgSepet_CellEditEnding"
-                      SelectionChanged="dgSepet_SelectionChanged_1"
-                      CanUserAddRows="False"
-                      CanUserDeleteRows="False">
-
-                <DataGrid.Resources>
-
-                    <Style TargetType="DataGridRow">
-
-                        <Setter Property="Background"
-                                Value="{DynamicResource PanelBackgroundBrush}"/>
-
-                        <Setter Property="Foreground"
-                                Value="{DynamicResource TextBrush}"/>
-
-                        <Setter Property="BorderThickness"
-                                Value="0"/>
-
-                        <Style.Triggers>
-
-                            <Trigger Property="IsMouseOver"
-                                     Value="True">
-
-                                <Setter Property="Background"
-                                        Value="{DynamicResource HoverRowBrush}"/>
-
-                            </Trigger>
-
-                            <Trigger Property="IsSelected"
-                                     Value="True">
-
-                                <Setter Property="Background"
-                                        Value="{DynamicResource SelectedRowBrush}"/>
-
-                                <Setter Property="Foreground"
-                                        Value="{DynamicResource SelectedTextBrush}"/>
-
-                            </Trigger>
-
-                        </Style.Triggers>
-
-                    </Style>
-
-                </DataGrid.Resources>
-
-
-                <DataGrid.Columns>
-
-                    <DataGridTextColumn Header="Məhsulun adı"
-                                        Binding="{Binding UrunAdi}"
-                                        IsReadOnly="True"
-                                        Width="2*"/>
-
-                    <DataGridTextColumn Header="Miqdar"
-                                        Binding="{Binding Miktar, UpdateSourceTrigger=PropertyChanged}"
-                                        Width="*"/>
-
-                    <DataGridTextColumn Header="Vahid"
-                                        Binding="{Binding BirimMetni}"
-                                        IsReadOnly="True"
-                                        Width="0.6*"/>
-
-                    <DataGridTextColumn Header="Vahid qiyməti"
-                                        Binding="{Binding BirimFiyat, StringFormat={}{0:N2} AZN}"
-                                        IsReadOnly="True"
-                                        Width="*"/>
-
-
-                    <!-- ================================================= -->
-                    <!-- ÜMUMİ MƏBLƏĞ -->
-                    <!-- ================================================= -->
-
-                    <DataGridTemplateColumn Header="Ümumi məbləğ"
-                                            Width="*">
-
-                        <DataGridTemplateColumn.CellTemplate>
-
-                            <DataTemplate>
-
-                                <TextBox Text=""
-                                         Background="{DynamicResource InputBackgroundBrush}"
-                                         Foreground="{DynamicResource TotalTextBrush}"
-                                         BorderBrush="{DynamicResource BorderBrushTheme}"
-                                         BorderThickness="1"
-                                         Padding="5"
-                                         FontSize="16"
-                                         FontWeight="Bold"
-                                         VerticalContentAlignment="Center"
-                                         HorizontalContentAlignment="Right"
-                                         HorizontalAlignment="Stretch"
-                                         Loaded="txtCartTotalEditor_Loaded"
-                                         LostFocus="txtCartTotalEditor_LostFocus"
-                                         KeyDown="txtCartTotalEditor_KeyDown"/>
-
-                            </DataTemplate>
-
-                        </DataGridTemplateColumn.CellTemplate>
-
-                    </DataGridTemplateColumn>
-
-
-                    <!-- ================================================= -->
-                    <!-- SİL -->
-                    <!-- ================================================= -->
-
-                    <DataGridTemplateColumn Header="Sil"
-                                            Width="70">
-
-                        <DataGridTemplateColumn.CellTemplate>
-
-                            <DataTemplate>
-
-                                <Button Content="❌"
-                                        Width="42"
-                                        Height="30"
-                                        Background="#E57373"
-                                        Foreground="White"
-                                        BorderThickness="0"
-                                        FontWeight="Bold"
-                                        Cursor="Hand"
-                                        ToolTip="Məhsulu səbətdən sil"
-                                        Click="btnSebetdenSil_Click"/>
-
-                            </DataTemplate>
-
-                        </DataGridTemplateColumn.CellTemplate>
-
-                    </DataGridTemplateColumn>
-
-                </DataGrid.Columns>
-
-            </DataGrid>
-
-        </GroupBox>
-
-
-        <!-- ===================================================== -->
-        <!-- SAĞ PANEL -->
-        <!-- ===================================================== -->
-
-        <Grid Grid.Column="1"
-              Margin="10,5,10,5">
-
-            <Grid.RowDefinitions>
-
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-
-            </Grid.RowDefinitions>
-
-
-            <!-- ================================================= -->
-            <!-- YUXARI DÜYMƏLƏR -->
-            <!-- ================================================= -->
-
-            <StackPanel Grid.Row="0"
-                        Orientation="Horizontal"
-                        HorizontalAlignment="Right"
-                        Margin="0,0,0,8">
-
-                <Button Name="btnGunlukSatislar"
-                        Content="🧾 SATIŞLAR"
-                        Width="137"
-                        Height="35"
-                        Background="#5B8DB8"
-                        Foreground="White"
-                        BorderThickness="0"
-                        FontWeight="Bold"
-                        Click="btnGunlukSatislar_Click"
-                        Cursor="Hand"
-                        Margin="0,0,8,0"/>
-
-                <Button x:Name="btnLogin"
-                        Content="🔐 DAXİL OL"
-                        Width="101"
-                        Height="35"
-                        Background="#6C7A89"
-                        Foreground="White"
-                        BorderThickness="0"
-                        FontWeight="Bold"
-                        Click="btnLogin_Click"
-                        Cursor="Hand"/>
-
-                <Button x:Name="btnTema"
-                        Content="🌙"
-                        Width="45"
-                        Height="35"
-                        Background="#455A64"
-                        Foreground="White"
-                        BorderThickness="0"
-                        FontSize="18"
-                        FontWeight="Bold"
-                        Click="btnTema_Click"
-                        Cursor="Hand"
-                        Margin="8,0,0,0"
-                        ToolTip="Gecə rejiminə keç"/>
-
-            </StackPanel>
-
-
-            <!-- ================================================= -->
-            <!-- SAĞ PANEL -->
-            <!-- ================================================= -->
-
-            <StackPanel Grid.Row="1">
-
-
-                <!-- ================================================= -->
-                <!-- ÜMUMİ MƏBLƏĞ -->
-                <!-- ================================================= -->
-
-                <Border Background="{DynamicResource PanelBackgroundBrush}"
-                        CornerRadius="10"
-                        Padding="10"
-                        Margin="0,0,0,8"
-                        BorderBrush="{DynamicResource BorderBrushTheme}"
-                        BorderThickness="1">
-
-                    <StackPanel HorizontalAlignment="Center">
-
-                        <TextBlock Text="ÜMUMİ MƏBLƏĞ"
-                                   Foreground="{DynamicResource SecondaryTextBrush}"
+        <!-- SOL PANEL: SATIŞ SƏBƏTİ -->
+        <Border Grid.Column="0"
+                Background="{DynamicResource PanelBackgroundBrush}"
+                BorderBrush="{DynamicResource BorderBrushTheme}"
+                BorderThickness="1"
+                CornerRadius="14"
+                Padding="10"
+                Margin="0,0,10,0">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- SƏBƏT BAŞLIĞI -->
+                <Grid Grid.Row="0" Margin="3,2,3,12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="SATIŞ TERMİNALI"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                   Foreground="{DynamicResource TextBrush}"/>
+
+                        <TextBlock Text="Məhsulları idarə et və satışı tamamla"
                                    FontSize="11"
-                                   FontWeight="SemiBold"
-                                   HorizontalAlignment="Center"/>
-
-                        <!-- GECƏ REJİMİNDƏ YAŞIL -->
-                        <TextBox Name="txtGenelToplam"
-                                 Text="0.00 AZN"
-                                 Foreground="{DynamicResource TotalAmountBrush}"
-                                 Background="Transparent"
-                                 BorderThickness="0"
-                                 FontSize="34"
-                                 FontWeight="Bold"
-                                 Height="50"
-                                 Width="300"
-                                 HorizontalAlignment="Center"
-                                 VerticalContentAlignment="Center"
-                                 HorizontalContentAlignment="Center"
-                                 TextAlignment="Center"
-                                 GotFocus="txtGenelToplam_GotFocus"
-                                 LostFocus="txtGenelToplam_LostFocus"/>
-
+                                   Foreground="{DynamicResource SecondaryTextBrush}"
+                                   Margin="0,3,0,0"/>
                     </StackPanel>
 
-                </Border>
-
-
-                <!-- ================================================= -->
-                <!-- BARKOD -->
-                <!-- ================================================= -->
-
-                <TextBox Name="txtBarkodOkuyucu"
-                         Height="45"
-                         Background="{DynamicResource InputBackgroundBrush}"
-                         Foreground="{DynamicResource TextBrush}"
-                         BorderBrush="{DynamicResource InputBorderBrush}"
-                         Padding="10"
-                         FontSize="20"
-                         VerticalContentAlignment="Center"
-                         KeyDown="txtBarkodOkuyucu_KeyDown"
-                         Margin="0,0,0,8"
-                         TextChanged="txtBarkodOkuyucu_TextChanged"/>
-
-
-                <!-- ================================================= -->
-                <!-- ÖDƏNİŞ -->
-                <!-- ================================================= -->
-
-                <Grid Margin="0,0,0,8">
-
-                    <Grid.ColumnDefinitions>
-
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="8"/>
-                        <ColumnDefinition Width="*"/>
-
-                    </Grid.ColumnDefinitions>
-
-
-                    <Button Name="btnNakit"
-                            Grid.Column="0"
-                            Height="65"
-                            Background="#4CAF7A"
-                            Foreground="White"
-                            BorderThickness="0"
-                            Click="btnNakit_Click"
-                            Cursor="Hand">
-
-                        <StackPanel>
-
-                            <TextBlock Text="💵 NƏĞD"
-                                       Foreground="White"
-                                       FontSize="18"
-                                       FontWeight="Bold"
-                                       HorizontalAlignment="Center"/>
-
-                            <TextBlock Text="Satışı tamamla"
-                                       Foreground="White"
-                                       FontSize="9"
-                                       HorizontalAlignment="Center"/>
-
-                        </StackPanel>
-
-                    </Button>
-
-
-                    <Button Name="btnKart"
-                            Grid.Column="2"
-                            Height="65"
-                            Background="#4F8DBB"
-                            Foreground="White"
-                            BorderThickness="0"
-                            Click="btnKart_Click"
-                            Cursor="Hand">
-
-                        <StackPanel>
-
-                            <TextBlock Text="💳 KART"
-                                       Foreground="White"
-                                       FontSize="18"
-                                       FontWeight="Bold"
-                                       HorizontalAlignment="Center"/>
-
-                            <TextBlock Text="Satışı tamamla"
-                                       Foreground="White"
-                                       FontSize="9"
-                                       HorizontalAlignment="Center"/>
-
-                        </StackPanel>
-
-                    </Button>
-
+                    <Border Grid.Column="1"
+                            Background="#EFF6FF"
+                            CornerRadius="8"
+                            Padding="10,7"
+                            VerticalAlignment="Center">
+                        <TextBlock Text="POS"
+                                   FontSize="12"
+                                   FontWeight="Bold"
+                                   Foreground="#2563EB"/>
+                    </Border>
                 </Grid>
 
+                <DataGrid Name="dgSepet"
+                          Grid.Row="1"
+                          Background="{DynamicResource PanelBackgroundBrush}"
+                          Foreground="{DynamicResource TextBrush}"
+                          RowBackground="{DynamicResource PanelBackgroundBrush}"
+                          AlternatingRowBackground="{DynamicResource AlternateRowBrush}"
+                          AutoGenerateColumns="False"
+                          HeadersVisibility="Column"
+                          GridLinesVisibility="Horizontal"
+                          HorizontalGridLinesBrush="{DynamicResource GridLineBrush}"
+                          BorderThickness="0"
+                          FontSize="12"
+                          FontWeight="SemiBold"
+                          CellEditEnding="dgSepet_CellEditEnding"
+                          SelectionChanged="dgSepet_SelectionChanged_1"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          CanUserReorderColumns="False"
+                          CanUserResizeRows="False"
+                          CanUserSortColumns="False"
+                          SelectionMode="Single"
+                          SelectionUnit="Cell"
+                          IsReadOnly="False"
+                          RowHeaderWidth="0"
+                          MinColumnWidth="35"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                          ScrollViewer.VerticalScrollBarVisibility="Auto">
 
-                <!-- ================================================= -->
-                <!-- GERİ QAYTARMA + HESABATLAR -->
-                <!-- ================================================= -->
+                    <DataGrid.Resources>
+                        <Style TargetType="{x:Type DataGridRow}">
+                            <Setter Property="Background" Value="{DynamicResource PanelBackgroundBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="MinHeight" Value="42"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
 
-                <Grid Margin="0,0,0,8">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource HoverRowBrush}"/>
+                                </Trigger>
 
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource SelectedRowBrush}"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource SelectedTextBrush}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.Resources>
+
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn Header="Məhsulun adı"
+                                            Binding="{Binding UrunAdi}"
+                                            IsReadOnly="True"
+                                            Width="2*"
+                                            ElementStyle="{StaticResource ProductNameCellStyle}"/>
+
+                        <DataGridTextColumn Header="Miqdar"
+                                            Binding="{Binding Miktar, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                            IsReadOnly="False"
+                                            Width="0.8*"
+                                            ElementStyle="{StaticResource CenteredCellTextStyle}"
+                                            EditingElementStyle="{StaticResource CenteredEditingTextBoxStyle}"/>
+
+                        <DataGridTextColumn Header="Vahid"
+                                            Binding="{Binding BirimMetni}"
+                                            IsReadOnly="True"
+                                            Width="0.65*"
+                                            ElementStyle="{StaticResource CenteredCellTextStyle}"/>
+
+                        <DataGridTextColumn Header="Vahid qiyməti"
+                                            Binding="{Binding BirimFiyat, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat={}{0:N2}}"
+                                            IsReadOnly="False"
+                                            Width="1.05*"
+                                            ElementStyle="{StaticResource CenteredCellTextStyle}"
+                                            EditingElementStyle="{StaticResource CenteredEditingTextBoxStyle}"/>
+
+                        <DataGridTemplateColumn Header="Ümumi məbləğ" Width="1.15*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox Text=""
+                                             Background="#F0FDF4"
+                                             Foreground="#15803D"
+                                             BorderBrush="#DCFCE7"
+                                             BorderThickness="1"
+                                             Padding="4"
+                                             Margin="0"
+                                             FontSize="12"
+                                             FontWeight="Bold"
+                                             VerticalContentAlignment="Center"
+                                             HorizontalContentAlignment="Center"
+                                             HorizontalAlignment="Stretch"
+                                             Loaded="txtCartTotalEditor_Loaded"
+                                             LostFocus="txtCartTotalEditor_LostFocus"
+                                             KeyDown="txtCartTotalEditor_KeyDown"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="Sil" Width="48">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="✕"
+                                            Width="30"
+                                            Height="28"
+                                            Padding="2"
+                                            Margin="0"
+                                            Background="#FEE2E2"
+                                            Foreground="#DC2626"
+                                            ToolTip="Məhsulu səbətdən sil"
+                                            Click="btnSebetdenSil_Click"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Border>
+
+        <!-- SAĞ İDARƏETMƏ PANELİ -->
+        <Border Grid.Column="1"
+                Background="{DynamicResource PanelBackgroundBrush}"
+                BorderBrush="{DynamicResource BorderBrushTheme}"
+                BorderThickness="1"
+                CornerRadius="14"
+                Padding="10">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- ÜST DÜYMƏLƏR -->
+                <Grid Grid.Row="0" Margin="0,0,0,8">
                     <Grid.ColumnDefinitions>
-
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="8"/>
-                        <ColumnDefinition Width="*"/>
-
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="38"/>
                     </Grid.ColumnDefinitions>
 
-
-                    <Button Name="btnGeriQaytarma"
+                    <Button Name="btnGunlukSatislar"
                             Grid.Column="0"
-                            Content="↩ GERİ QAYTARMA"
-                            Height="42"
-                            Background="#D89A55"
-                            Foreground="White"
-                            BorderThickness="0"
-                            FontWeight="Bold"
-                            Click="btnGeriQaytarma_Click"
-                            Cursor="Hand"/>
+                            Content="🧾 SATIŞLAR"
+                            Height="36"
+                            Style="{StaticResource GrayActionButton}"
+                            Click="btnGunlukSatislar_Click"/>
 
-
-                    <Button Name="btnHesabatlar"
+                    <Button x:Name="btnLogin"
                             Grid.Column="2"
-                            Content="📈 HESABATLAR"
-                            Height="42"
-                            Background="#7D6B9D"
-                            Foreground="White"
-                            BorderThickness="0"
-                            FontWeight="Bold"
-                            Click="btnHesabatlar_Click"
-                            Cursor="Hand"/>
+                            Content="🔐 DAXİL OL"
+                            Width="90"
+                            Height="36"
+                            Style="{StaticResource GrayActionButton}"
+                            Click="btnLogin_Click"/>
 
+                    <Button x:Name="btnTema"
+                            Grid.Column="4"
+                            Content="◐"
+                            Height="36"
+                            Background="#334155"
+                            Foreground="White"
+                            FontSize="18"
+                            Click="btnTema_Click"
+                            ToolTip="Görünüşü dəyiş"/>
                 </Grid>
 
-
-                <!-- ================================================= -->
-                <!-- BARKODSUZ / ƏL İLƏ MƏHSUL SATIŞI -->
-                <!-- ================================================= -->
-
-                <Border Background="{DynamicResource PanelBackgroundBrush}"
-                        CornerRadius="6"
-                        Padding="8"
-                        Margin="0,0,0,8"
-                        BorderBrush="{DynamicResource BorderBrushTheme}"
-                        BorderThickness="1">
+                <!-- ƏSAS ƏMƏLİYYATLAR -->
+                <ScrollViewer Grid.Row="1"
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
 
                     <StackPanel>
 
-                        <TextBlock Text="Barkodsuz / Əl ilə məhsul satışı"
-                                   Foreground="{DynamicResource SecondaryTextBrush}"
-                                   FontSize="11"
-                                   FontWeight="SemiBold"
-                                   Margin="0,0,0,5"/>
+                        <!-- ÜMUMİ MƏBLƏĞ -->
+                        <Border Background="#F0FDF4"
+                                BorderBrush="#BBF7D0"
+                                BorderThickness="1"
+                                CornerRadius="12"
+                                Padding="10"
+                                Margin="0,0,0,8">
 
-                        <Grid>
+                            <StackPanel>
+                                <TextBlock Text="ÜMUMİ MƏBLƏĞ"
+                                           Foreground="#166534"
+                                           FontSize="11"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center"/>
 
-                            <Grid.ColumnDefinitions>
+                                <TextBox Name="txtGenelToplam"
+                                         Text="0.00 AZN"
+                                         Foreground="#15803D"
+                                         Background="Transparent"
+                                         BorderThickness="0"
+                                         FontSize="27"
+                                         FontWeight="Bold"
+                                         Height="42"
+                                         HorizontalContentAlignment="Center"
+                                         VerticalContentAlignment="Center"
+                                         TextAlignment="Center"
+                                         GotFocus="txtGenelToplam_GotFocus"
+                                         LostFocus="txtGenelToplam_LostFocus"/>
+                            </StackPanel>
+                        </Border>
 
-                                <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="Auto"/>
-
-                            </Grid.ColumnDefinitions>
-
-
-                            <Grid Grid.Column="0"
-                                  Margin="0,0,5,0">
-
-                                <TextBox Name="txtManuelUrunAdi"
-                                         Background="{DynamicResource InputBackgroundBrush}"
-                                         Foreground="{DynamicResource TextBrush}"
-                                         Padding="8"
-                                         BorderBrush="{DynamicResource BorderBrushTheme}"
-                                         FontSize="13"
-                                         Height="35"
-                                         VerticalContentAlignment="Center"/>
-
-                                <TextBlock Text="Məhsul adı"
-                                           Foreground="#9AA7B2"
-                                           FontSize="13"
-                                           Margin="8,0,8,0"
-                                           VerticalAlignment="Center"
-                                           IsHitTestVisible="False">
-
-                                    <TextBlock.Style>
-
-                                        <Style TargetType="TextBlock">
-
-                                            <Setter Property="Visibility"
-                                                    Value="Collapsed"/>
-
-                                            <Style.Triggers>
-
-                                                <DataTrigger Binding="{Binding Text, ElementName=txtManuelUrunAdi}"
-                                                             Value="">
-
-                                                    <Setter Property="Visibility"
-                                                            Value="Visible"/>
-
-                                                </DataTrigger>
-
-                                            </Style.Triggers>
-
-                                        </Style>
-
-                                    </TextBlock.Style>
-
-                                </TextBlock>
-
-                            </Grid>
-
-
-                            <Grid Grid.Column="1"
-                                  Margin="0,0,5,0">
-
-                                <TextBox Name="txtManuelFiyat"
-                                         Background="{DynamicResource InputBackgroundBrush}"
-                                         Foreground="{DynamicResource TextBrush}"
-                                         Padding="8"
-                                         BorderBrush="{DynamicResource BorderBrushTheme}"
-                                         FontSize="13"
-                                         Height="35"
-                                         VerticalContentAlignment="Center"/>
-
-                                <TextBlock Text="Məbləğ"
-                                           Foreground="#9AA7B2"
-                                           FontSize="13"
-                                           Margin="8,0,8,0"
-                                           VerticalAlignment="Center"
-                                           IsHitTestVisible="False">
-
-                                    <TextBlock.Style>
-
-                                        <Style TargetType="TextBlock">
-
-                                            <Setter Property="Visibility"
-                                                    Value="Collapsed"/>
-
-                                            <Style.Triggers>
-
-                                                <DataTrigger Binding="{Binding Text, ElementName=txtManuelFiyat}"
-                                                             Value="">
-
-                                                    <Setter Property="Visibility"
-                                                            Value="Visible"/>
-
-                                                </DataTrigger>
-
-                                            </Style.Triggers>
-
-                                        </Style>
-
-                                    </TextBlock.Style>
-
-                                </TextBlock>
-
-                            </Grid>
-
-
-                            <Button Name="btnManuelEkle"
-                                    Grid.Column="2"
-                                    Content="ƏLAVƏ ET"
-                                    Height="35"
-                                    MinWidth="85"
-                                    Background="#4CAF7A"
-                                    Foreground="White"
-                                    BorderThickness="0"
-                                    FontWeight="Bold"
-                                    Padding="10,0"
-                                    Click="btnManuelEkle_Click"
-                                    Cursor="Hand"/>
-
-                        </Grid>
-
-                    </StackPanel>
-
-                </Border>
-
-
-                <!-- ================================================= -->
-                <!-- XİDMƏTLƏR -->
-                <!-- ================================================= -->
-
-                <Button Name="btnXidmetler"
-                        Content="🛠 XİDMƏTLƏR"
-                        Height="42"
-                        Margin="0,0,0,6"
-                        Background="#4E9A91"
-                        Foreground="White"
-                        BorderThickness="0"
-                        FontWeight="Bold"
-                        FontSize="14"
-                        Click="btnXidmetler_Click"
-                        Cursor="Hand"/>
-
-
-                <!-- ================================================= -->
-                <!-- MƏHSULLAR -->
-                <!-- ================================================= -->
-
-                <Button Name="btnUrunListesi"
-                        Content="📦 MƏHSULLARIN İDARƏ EDİLMƏSİ"
-                        Height="38"
-                        Margin="0,0,0,6"
-                        Background="#66788A"
-                        Foreground="White"
-                        BorderThickness="0"
-                        Click="btnUrunListesi_Click"
-                        Cursor="Hand"/>
-
-
-                <!-- ================================================= -->
-                <!-- ANBAR -->
-                <!-- ================================================= -->
-
-                <Button Name="btnStokSayfasi"
-                        Content="📋 ANBAR QALIĞI"
-                        Height="38"
-                        Margin="0,0,0,6"
-                        Background="#7A82A8"
-                        Foreground="White"
-                        BorderThickness="0"
-                        Click="btnStokSayfasi_Click"
-                        Cursor="Hand"/>
-
-
-                <!-- ================================================= -->
-                <!-- TOPDAN SATIŞ -->
-                <!-- ================================================= -->
-
-                <Button Name="btnToptanSatis"
-                        Content="TOPDAN SATIŞ"
-                        Height="42"
-                        Margin="0,0,0,6"
-                        Background="#C9824E"
-                        Foreground="White"
-                        BorderThickness="0"
-                        FontWeight="Bold"
-                        Click="btnToptanSatis_Click"
-                        Cursor="Hand"/>
-
-
-                <!-- ================================================= -->
-                <!-- SƏBƏTİ BOŞALT -->
-                <!-- ================================================= -->
-
-                <Button Name="btnSepetiTemizle"
-                        Content="❌ SƏBƏTİ BOŞALT"
-                        Height="38"
-                        Background="#D46A6A"
-                        Foreground="White"
-                        BorderThickness="0"
-                        Click="btnSepetiTemizle_Click"
-                        Cursor="Hand"/>
-
-
-                <!-- ================================================= -->
-                <!-- İSTİFADƏÇİ MƏLUMATLARI -->
-                <!-- ================================================= -->
-
-                <Border Background="{DynamicResource PanelBackgroundBrush}"
-                        CornerRadius="8"
-                        Padding="2"
-                        Margin="0,10,0,0"
-                        BorderBrush="{DynamicResource BorderBrushTheme}"
-                        BorderThickness="1"
-                        Height="79">
-
-                    <StackPanel HorizontalAlignment="Center">
-
-                        <TextBlock Text="Hazırladı"
+                        <!-- BARKOD -->
+                        <TextBlock Text="BARKOD OXUYUCU"
                                    Foreground="{DynamicResource SecondaryTextBrush}"
                                    FontSize="10"
-                                   HorizontalAlignment="Center"/>
-
-                        <TextBlock Text="Əsgərxan Bayramov"
-                                   Foreground="{DynamicResource TotalTextBrush}"
-                                   FontSize="15"
                                    FontWeight="Bold"
-                                   Margin="0,3,0,0"
-                                   HorizontalAlignment="Center"/>
+                                   Margin="2,0,2,4"/>
 
-                        <TextBlock Text="+994 51 584 64 11"
-                                   Foreground="#D46A6A"
-                                   FontSize="12"
-                                   Margin="0,3,0,0"
-                                   HorizontalAlignment="Center"/>
+                        <TextBox Name="txtBarkodOkuyucu"
+                                 Height="42"
+                                 Background="#F8FAFC"
+                                 Foreground="{DynamicResource TextBrush}"
+                                 BorderBrush="{DynamicResource InputBorderBrush}"
+                                 Padding="10"
+                                 FontSize="18"
+                                 VerticalContentAlignment="Center"
+                                 KeyDown="txtBarkodOkuyucu_KeyDown"
+                                 Margin="0,0,0,8"
+                                 TextChanged="txtBarkodOkuyucu_TextChanged"
+                                 ToolTip="Barkodu oxut və ya daxil et"/>
+
+                        <!-- MƏHSUL AXTARIŞI -->
+                        <Grid Margin="0,0,0,8">
+                            <TextBox Name="txtMehsulAxtar"
+                                     Height="37"
+                                     Background="{DynamicResource InputBackgroundBrush}"
+                                     Foreground="{DynamicResource TextBrush}"
+                                     BorderBrush="{DynamicResource InputBorderBrush}"
+                                     Padding="9"
+                                     FontSize="12"
+                                     VerticalContentAlignment="Center"
+                                     TextChanged="txtMehsulAxtar_TextChanged"
+                                     KeyDown="txtMehsulAxtar_KeyDown"
+                                     ToolTip="Məhsul adı və ya barkod axtar"/>
+
+                            <TextBlock Text="⌕  Məhsul axtar..."
+                                       Foreground="#94A3B8"
+                                       FontSize="12"
+                                       Margin="10,0,5,0"
+                                       VerticalAlignment="Center"
+                                       IsHitTestVisible="False">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=txtMehsulAxtar}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+
+                        <!-- NƏĞD VƏ KART -->
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="7"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Name="btnNakit"
+                                    Grid.Column="0"
+                                    Height="57"
+                                    Style="{StaticResource GreenActionButton}"
+                                    Click="btnNakit_Click">
+                                <StackPanel>
+                                    <TextBlock Text="💵 NƏĞD"
+                                               Foreground="White"
+                                               FontSize="16"
+                                               FontWeight="Bold"
+                                               HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Satışı tamamla"
+                                               Foreground="#DCFCE7"
+                                               FontSize="9"
+                                               HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Name="btnKart"
+                                    Grid.Column="2"
+                                    Height="57"
+                                    Background="#BE185D"
+                                    Foreground="White"
+                                    Click="btnKart_Click">
+                                <StackPanel>
+                                    <TextBlock Text="💳 KART"
+                                               Foreground="White"
+                                               FontSize="16"
+                                               FontWeight="Bold"
+                                               HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Satışı tamamla"
+                                               Foreground="#FCE7F3"
+                                               FontSize="9"
+                                               HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+
+                        <!-- GERİ QAYTARMA VƏ HESABATLAR -->
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="7"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Name="btnGeriQaytarma"
+                                    Grid.Column="0"
+                                    Content="↩ GERİ QAYTARMA"
+                                    Height="38"
+                                    Style="{StaticResource OrangeActionButton}"
+                                    FontSize="10"
+                                    Click="btnGeriQaytarma_Click"/>
+
+                            <Button Name="btnHesabatlar"
+                                    Grid.Column="2"
+                                    Content="📊 HESABATLAR"
+                                    Height="38"
+                                    Style="{StaticResource GrayActionButton}"
+                                    FontSize="10"
+                                    Click="btnHesabatlar_Click"/>
+                        </Grid>
+
+                        <!-- ƏL İLƏ MƏHSUL ƏLAVƏ ET -->
+                        <Border Background="#F8FAFC"
+                                BorderBrush="{DynamicResource BorderBrushTheme}"
+                                BorderThickness="1"
+                                CornerRadius="10"
+                                Padding="8"
+                                Margin="0,0,0,8">
+
+                            <StackPanel>
+                                <TextBlock Text="BARKODSUZ MƏHSUL"
+                                           Foreground="{DynamicResource SecondaryTextBrush}"
+                                           FontSize="10"
+                                           FontWeight="Bold"
+                                           Margin="0,0,0,6"/>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1.6*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid Grid.Column="0" Margin="0,0,4,0">
+                                        <TextBox Name="txtManuelUrunAdi"
+                                                 Padding="7"
+                                                 FontSize="11"
+                                                 Height="34"/>
+
+                                        <TextBlock Text="Məhsul adı"
+                                                   Foreground="#94A3B8"
+                                                   FontSize="11"
+                                                   Margin="8,0"
+                                                   VerticalAlignment="Center"
+                                                   IsHitTestVisible="False">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Text, ElementName=txtManuelUrunAdi}" Value="">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Grid>
+
+                                    <Grid Grid.Column="1" Margin="0,0,4,0">
+                                        <TextBox Name="txtManuelFiyat"
+                                                 Padding="7"
+                                                 FontSize="11"
+                                                 Height="34"/>
+
+                                        <TextBlock Text="Qiymət"
+                                                   Foreground="#94A3B8"
+                                                   FontSize="11"
+                                                   Margin="8,0"
+                                                   VerticalAlignment="Center"
+                                                   IsHitTestVisible="False">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Text, ElementName=txtManuelFiyat}" Value="">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Grid>
+
+                                    <Button Name="btnManuelEkle"
+                                            Grid.Column="2"
+                                            Content="＋ ƏLAVƏ ET"
+                                            Height="34"
+                                            MinWidth="72"
+                                            Style="{StaticResource GreenActionButton}"
+                                            FontSize="10"
+                                            Padding="6,2"
+                                            Click="btnManuelEkle_Click"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- XİDMƏTLƏR: BOZ -->
+                        <Button Name="btnXidmetler"
+                                Content="🛠  XİDMƏTLƏR"
+                                Height="38"
+                                Margin="0,0,0,6"
+                                Style="{StaticResource GrayActionButton}"
+                                FontSize="12"
+                                Click="btnXidmetler_Click"/>
+
+                        <!-- MƏHSULLAR -->
+                        <Button Name="btnUrunListesi"
+                                Content="📦  MƏHSULLARIN İDARƏ EDİLMƏSİ"
+                                Height="36"
+                                Margin="0,0,0,6"
+                                Style="{StaticResource GrayActionButton}"
+                                Click="btnUrunListesi_Click"/>
+
+                        <!-- ANBAR -->
+                        <Button Name="btnStokSayfasi"
+                                Content="📋  ANBAR QALIĞI"
+                                Height="36"
+                                Margin="0,0,0,6"
+                                Style="{StaticResource GrayActionButton}"
+                                Click="btnStokSayfasi_Click"/>
+
+                        <!-- SƏBƏTİ BOŞALT -->
+                        <Button Name="btnSepetiTemizle"
+                                Content="🗑  SƏBƏTİ BOŞALT"
+                                Height="38"
+                                Style="{StaticResource RedActionButton}"
+                                Click="btnSepetiTemizle_Click"/>
+
+                        <!-- HAQQINDA -->
+                        <Border Background="#F8FAFC"
+                                BorderBrush="{DynamicResource BorderBrushTheme}"
+                                BorderThickness="1"
+                                CornerRadius="9"
+                                Padding="7"
+                                Margin="0,8,0,0">
+
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="Hazırladı"
+                                           Foreground="{DynamicResource SecondaryTextBrush}"
+                                           FontSize="9"
+                                           HorizontalAlignment="Center"/>
+
+                                <TextBlock Text="Əsgərxan Bayramov"
+                                           Foreground="#15803D"
+                                           FontSize="12"
+                                           FontWeight="Bold"
+                                           Margin="0,2,0,0"
+                                           HorizontalAlignment="Center"/>
+
+                                <TextBlock Text="+994 51 584 64 11"
+                                           Foreground="{DynamicResource SecondaryTextBrush}"
+                                           FontSize="10"
+                                           Margin="0,2,0,0"
+                                           HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
 
                     </StackPanel>
-
-                </Border>
-
-            </StackPanel>
-
-        </Grid>
-
+                </ScrollViewer>
+            </Grid>
+        </Border>
     </Grid>
-
 </Window>

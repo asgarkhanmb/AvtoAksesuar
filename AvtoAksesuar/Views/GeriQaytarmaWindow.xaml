@@ -8,7 +8,81 @@
         MinHeight="650"
         MinWidth="950"
         WindowStartupLocation="CenterOwner"
-        Background="#121212">
+        Background="#F4F6F9">
+
+    <Window.Resources>
+
+        <!-- ÜMUMİ RƏNGLƏR -->
+        <SolidColorBrush x:Key="PageBackground" Color="#F4F6F9"/>
+        <SolidColorBrush x:Key="PanelBackground" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="BorderColor" Color="#DDE2E8"/>
+        <SolidColorBrush x:Key="PrimaryColor" Color="#D96B16"/>
+        <SolidColorBrush x:Key="PrimaryHoverColor" Color="#BD5910"/>
+        <SolidColorBrush x:Key="TextColor" Color="#263238"/>
+        <SolidColorBrush x:Key="SecondaryTextColor" Color="#667085"/>
+        <SolidColorBrush x:Key="InputBackground" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="SelectedBackground" Color="#FFF0E2"/>
+        <SolidColorBrush x:Key="SelectedForeground" Color="#7A3908"/>
+
+        <!-- TARİX SEÇİCİ -->
+        <Style TargetType="{x:Type DatePicker}">
+            <Setter Property="Foreground" Value="#263238"/>
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#D0D5DD"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="5"/>
+        </Style>
+
+        <!-- TEXTBOX -->
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="Foreground" Value="#263238"/>
+            <Setter Property="BorderBrush" Value="#D0D5DD"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CaretBrush" Value="#263238"/>
+            <Setter Property="SelectionBrush" Value="#F4C7A1"/>
+        </Style>
+
+        <!-- DÜYMƏ -->
+        <Style x:Key="PrimaryButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#D96B16"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Padding" Value="10,5"/>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#BD5910"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#A94B0A"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.55"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- CƏDVƏL BAŞLIQLARI -->
+        <Style x:Key="ReturnGridHeaderStyle"
+               TargetType="{x:Type DataGridColumnHeader}">
+
+            <Setter Property="Background" Value="#F0F2F5"/>
+            <Setter Property="Foreground" Value="#B65310"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderBrush" Value="#DDE2E8"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        </Style>
+
+    </Window.Resources>
 
     <Grid Margin="15">
 
@@ -19,48 +93,40 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-
-        <!-- ===================================================== -->
         <!-- BAŞLIQ -->
-        <!-- ===================================================== -->
-
         <Border Grid.Row="0"
-                Background="#1E1E1E"
-                BorderBrush="#E67E22"
+                Background="#FFFFFF"
+                BorderBrush="#DDE2E8"
                 BorderThickness="1"
                 CornerRadius="8"
                 Padding="15"
                 Margin="0,0,0,12">
 
             <Grid>
-
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-
                 <StackPanel>
 
                     <TextBlock Text="↩ MƏHSUL GERİ QAYTARMA"
-                               Foreground="#E67E22"
+                               Foreground="#B65310"
                                FontSize="24"
                                FontWeight="Bold"/>
 
                     <TextBlock Text="Çek nömrəsi və ya məhsul adına görə axtararaq məhsulu geri qaytarın."
-                               Foreground="#999999"
+                               Foreground="#667085"
                                FontSize="14"
                                Margin="0,5,0,0"/>
 
                 </StackPanel>
 
-
                 <!-- TARİX -->
-
                 <StackPanel Grid.Column="1">
 
                     <TextBlock Text="Satış tarixi"
-                               Foreground="#999999"
+                               Foreground="#667085"
                                FontSize="12"
                                Margin="0,0,0,4"/>
 
@@ -69,57 +135,46 @@
                                 Height="35"
                                 SelectedDate="{x:Static sys:DateTime.Today}"
                                 SelectedDateChanged="dpTarix_SelectedDateChanged"
-                                Background="#252525"
-                                Foreground="Black"/>
+                                Background="#FFFFFF"
+                                Foreground="#263238"/>
 
                 </StackPanel>
-
             </Grid>
-
         </Border>
 
-
-        <!-- ===================================================== -->
         <!-- AXTARIŞ -->
-        <!-- ===================================================== -->
-
         <Border Grid.Row="1"
-                Background="#1E1E1E"
-                BorderBrush="#333333"
+                Background="#FFFFFF"
+                BorderBrush="#DDE2E8"
                 BorderThickness="1"
                 CornerRadius="8"
                 Padding="12"
                 Margin="0,0,0,12">
 
             <Grid>
-
                 <Grid.ColumnDefinitions>
-
                     <ColumnDefinition Width="170"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="170"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="130"/>
                     <ColumnDefinition Width="110"/>
-
                 </Grid.ColumnDefinitions>
 
-
                 <!-- ÇEK NÖMRƏSİ -->
-
                 <StackPanel Grid.Column="0"
                             Margin="0,0,8,0">
 
                     <TextBlock Text="Çek nömrəsi"
-                               Foreground="#999999"
+                               Foreground="#667085"
                                FontSize="12"
                                Margin="0,0,0,4"/>
 
                     <TextBox Name="txtCekNomresiAxtar"
                              Height="38"
-                             Background="#252525"
-                             Foreground="White"
-                             BorderBrush="#E67E22"
+                             Background="#FFFFFF"
+                             Foreground="#263238"
+                             BorderBrush="#D0D5DD"
                              BorderThickness="1"
                              Padding="8"
                              FontSize="15"
@@ -128,22 +183,20 @@
 
                 </StackPanel>
 
-
                 <!-- MƏHSUL ADI -->
-
                 <StackPanel Grid.Column="1"
                             Margin="0,0,12,0">
 
                     <TextBlock Text="Məhsul adı"
-                               Foreground="#999999"
+                               Foreground="#667085"
                                FontSize="12"
                                Margin="0,0,0,4"/>
 
                     <TextBox Name="txtMehsulAxtar"
                              Height="38"
-                             Background="#252525"
-                             Foreground="White"
-                             BorderBrush="#E67E22"
+                             Background="#FFFFFF"
+                             Foreground="#263238"
+                             BorderBrush="#D0D5DD"
                              BorderThickness="1"
                              Padding="8"
                              FontSize="15"
@@ -152,94 +205,100 @@
 
                 </StackPanel>
 
-
-                <!-- MƏLUMAT -->
-
+                <!-- AXTARIŞ MƏLUMATI -->
                 <StackPanel Grid.Column="2"
                             Margin="0,0,8,0">
 
                     <TextBlock Text="Axtarış"
-                               Foreground="#999999"
+                               Foreground="#667085"
                                FontSize="12"
                                Margin="0,0,0,4"/>
 
                     <TextBlock Text="Çek № + Məhsul"
-                               Foreground="#E67E22"
+                               Foreground="#B65310"
                                FontSize="15"
                                FontWeight="Bold"
                                VerticalAlignment="Center"/>
 
                 </StackPanel>
 
-
                 <!-- NƏTİCƏ -->
-
                 <TextBlock Grid.Column="3"
                            Name="txtAxtarisNeticesi"
                            Text="Bütün satışlar"
-                           Foreground="#AAAAAA"
+                           Foreground="#667085"
                            FontSize="13"
                            VerticalAlignment="Center"
                            Margin="0,20,10,0"/>
 
-
                 <!-- AXTAR -->
-
                 <Button Grid.Column="4"
                         Name="btnAxtar"
                         Content="🔍 AXTAR"
                         Height="42"
                         Margin="5,15,5,0"
-                        Background="#E67E22"
+                        Background="#D96B16"
                         Foreground="White"
                         BorderThickness="0"
                         FontWeight="Bold"
                         FontSize="13"
                         Cursor="Hand"
+                        Style="{StaticResource PrimaryButtonStyle}"
                         Click="btnAxtar_Click"/>
 
-
                 <!-- TƏMİZLƏ -->
-
                 <Button Grid.Column="5"
                         Name="btnAxtarTemizle"
                         Content="✖ TƏMİZLƏ"
                         Height="42"
                         Margin="5,15,0,0"
-                        Background="#555555"
+                        Background="#667085"
                         Foreground="White"
                         BorderThickness="0"
                         FontWeight="Bold"
                         FontSize="12"
                         Cursor="Hand"
-                        Click="btnAxtarTemizle_Click"/>
+                        Click="btnAxtarTemizle_Click">
+
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Background" Value="#667085"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#475467"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+
+                </Button>
 
             </Grid>
-
         </Border>
 
-
-        <!-- ===================================================== -->
-        <!-- SATIŞLAR -->
-        <!-- ===================================================== -->
-
+        <!-- SATIŞLAR CƏDVƏLİ -->
         <Border Grid.Row="2"
-                Background="#1E1E1E"
-                BorderBrush="#333333"
+                Background="#FFFFFF"
+                BorderBrush="#DDE2E8"
                 BorderThickness="1"
                 CornerRadius="8"
                 Padding="5">
 
             <DataGrid Name="dgSatishlar"
                       AutoGenerateColumns="False"
-                      Background="#1E1E1E"
-                      Foreground="White"
-                      RowBackground="#1E1E1E"
-                      AlternatingRowBackground="#232323"
-                      BorderBrush="#333333"
+                      Background="#FFFFFF"
+                      Foreground="#263238"
+                      RowBackground="#FFFFFF"
+                      AlternatingRowBackground="#F7F8FA"
+                      BorderBrush="#DDE2E8"
                       GridLinesVisibility="Horizontal"
-                      HorizontalGridLinesBrush="#333333"
-                      VerticalGridLinesBrush="#333333"
+                      HorizontalGridLinesBrush="#E4E7EC"
+                      VerticalGridLinesBrush="#E4E7EC"
                       SelectionMode="Single"
                       SelectionUnit="FullRow"
                       SelectionChanged="dgSatishlar_SelectionChanged"
@@ -247,221 +306,184 @@
                       CanUserAddRows="False"
                       CanUserDeleteRows="False"
                       IsReadOnly="True"
-                      HeadersVisibility="Column">
+                      HeadersVisibility="Column"
+                      RowHeaderWidth="0"
+                      FontSize="13"
+                      EnableRowVirtualization="True"
+                      EnableColumnVirtualization="True">
 
                 <DataGrid.Resources>
 
-                    <!-- HEADER -->
+                    <!-- MƏLUMATLARIN MƏRKƏZƏ HİZALANMASI -->
+                    <Style x:Key="CenterCellText"
+                           TargetType="{x:Type TextBlock}">
 
-                    <Style TargetType="DataGridColumnHeader">
-
-                        <Setter Property="Background"
-                                Value="#252525"/>
-
-                        <Setter Property="Foreground"
-                                Value="#E67E22"/>
-
-                        <Setter Property="FontWeight"
-                                Value="Bold"/>
-
-                        <Setter Property="Padding"
-                                Value="8"/>
-
-                        <Setter Property="HorizontalContentAlignment"
-                                Value="Center"/>
+                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="TextAlignment" Value="Center"/>
+                        <Setter Property="Foreground" Value="#263238"/>
 
                     </Style>
 
+                    <!-- CƏDVƏL BAŞLIQLARI -->
+                    <Style TargetType="{x:Type DataGridColumnHeader}"
+                           BasedOn="{StaticResource ReturnGridHeaderStyle}"/>
 
-                    <!-- CELL -->
+                    <!-- HÜCEYRƏLƏR -->
+                    <Style TargetType="{x:Type DataGridCell}">
 
-                    <Style TargetType="DataGridCell">
-
-                        <Setter Property="Foreground"
-                                Value="White"/>
-
-                        <Setter Property="Background"
-                                Value="Transparent"/>
-
-                        <Setter Property="Padding"
-                                Value="7"/>
-
-                        <Setter Property="BorderThickness"
-                                Value="0"/>
-
-                    </Style>
-
-
-                    <!-- ROW -->
-
-                    <Style TargetType="DataGridRow">
-
-                        <Setter Property="Background"
-                                Value="#1E1E1E"/>
-
-                        <Setter Property="Foreground"
-                                Value="White"/>
-
-                        <Setter Property="Cursor"
-                                Value="Hand"/>
+                        <Setter Property="Foreground" Value="#263238"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Padding" Value="7"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
 
                         <Style.Triggers>
 
-                            <Trigger Property="IsSelected"
-                                     Value="True">
+                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"
+                                         Value="True">
 
-                                <Setter Property="Background"
-                                        Value="#5A3218"/>
+                                <Setter Property="Background" Value="#FFF0E2"/>
+                                <Setter Property="Foreground" Value="#7A3908"/>
 
-                                <Setter Property="Foreground"
-                                        Value="White"/>
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"
+                                         Value="True">
+
+                                <Setter Property="Background" Value="#FFF0E2"/>
+                                <Setter Property="Foreground" Value="#7A3908"/>
+
+                            </DataTrigger>
+
+                        </Style.Triggers>
+                    </Style>
+
+                    <!-- SƏTİRLƏR -->
+                    <Style TargetType="{x:Type DataGridRow}">
+
+                        <Setter Property="Background" Value="#FFFFFF"/>
+                        <Setter Property="Foreground" Value="#263238"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Setter Property="MinHeight" Value="35"/>
+
+                        <Style.Triggers>
+
+                            <Trigger Property="IsSelected" Value="True">
+
+                                <Setter Property="Background" Value="#FFF0E2"/>
+                                <Setter Property="Foreground" Value="#7A3908"/>
 
                             </Trigger>
 
-                            <Trigger Property="IsMouseOver"
-                                     Value="True">
+                            <Trigger Property="IsMouseOver" Value="True">
 
-                                <Setter Property="Background"
-                                        Value="#3A2A20"/>
-
-                                <Setter Property="Foreground"
-                                        Value="White"/>
+                                <Setter Property="Background" Value="#FFF7F0"/>
+                                <Setter Property="Foreground" Value="#263238"/>
 
                             </Trigger>
 
                         </Style.Triggers>
-
                     </Style>
 
                 </DataGrid.Resources>
 
-
                 <DataGrid.Columns>
 
-
-                    <!-- ================================================= -->
                     <!-- ÇEK NÖMRƏSİ -->
-                    <!-- ================================================= -->
-
                     <DataGridTextColumn Header="Çek №"
                                         Binding="{Binding CekNomresi}"
+                                        ElementStyle="{StaticResource CenterCellText}"
                                         Width="100"/>
 
-
-                    <!-- ================================================= -->
                     <!-- MƏHSUL -->
-                    <!-- ================================================= -->
-
                     <DataGridTextColumn Header="Məhsul"
                                         Binding="{Binding UrunAdi}"
+                                        ElementStyle="{StaticResource CenterCellText}"
                                         Width="*"/>
 
-
-                    <!-- ================================================= -->
                     <!-- MİQDAR -->
-                    <!-- ================================================= -->
-
                     <DataGridTextColumn Header="Satılan miqdar"
                                         Binding="{Binding Miktar, StringFormat={}{0:N2}}"
+                                        ElementStyle="{StaticResource CenterCellText}"
                                         Width="140"/>
 
-
-                    <!-- ================================================= -->
                     <!-- MƏBLƏĞ -->
-                    <!-- ================================================= -->
-
                     <DataGridTextColumn Header="Məbləğ"
                                         Binding="{Binding ToplamTutar, StringFormat={}{0:N2} AZN}"
+                                        ElementStyle="{StaticResource CenterCellText}"
                                         Width="160"/>
 
-
-                    <!-- ================================================= -->
                     <!-- ÖDƏNİŞ -->
-                    <!-- ================================================= -->
-
                     <DataGridTextColumn Header="Ödəniş"
                                         Binding="{Binding OdemeYontemi}"
+                                        ElementStyle="{StaticResource CenterCellText}"
                                         Width="120"/>
 
-
-                    <!-- ================================================= -->
                     <!-- TARİX -->
-                    <!-- ================================================= -->
-
                     <DataGridTextColumn Header="Tarix"
                                         Binding="{Binding TarixMetni}"
+                                        ElementStyle="{StaticResource CenterCellText}"
                                         Width="145"/>
 
                 </DataGrid.Columns>
 
             </DataGrid>
-
         </Border>
 
-
-        <!-- ===================================================== -->
         <!-- AŞAĞI PANEL -->
-        <!-- ===================================================== -->
-
         <Border Grid.Row="3"
-                Background="#1E1E1E"
-                BorderBrush="#333333"
+                Background="#FFFFFF"
+                BorderBrush="#DDE2E8"
                 BorderThickness="1"
                 CornerRadius="8"
                 Padding="15"
                 Margin="0,12,0,0">
 
             <Grid>
-
                 <Grid.ColumnDefinitions>
-
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="200"/>
                     <ColumnDefinition Width="180"/>
-
                 </Grid.ColumnDefinitions>
 
-
                 <!-- SEÇİLMİŞ MƏHSUL -->
-
                 <StackPanel VerticalAlignment="Center">
 
                     <TextBlock Text="Seçilmiş məhsul:"
-                               Foreground="#999999"
+                               Foreground="#667085"
                                FontSize="13"/>
 
                     <TextBlock Name="txtSecilenUrun"
                                Text="-"
-                               Foreground="White"
+                               Foreground="#263238"
                                FontSize="18"
                                FontWeight="Bold"
                                Margin="0,4,0,0"/>
 
                     <TextBlock Name="txtSecilenCek"
                                Text="Çek №: -"
-                               Foreground="#E67E22"
+                               Foreground="#B65310"
                                FontSize="13"
                                Margin="0,3,0,0"/>
 
                 </StackPanel>
 
-
                 <!-- MİQDAR -->
-
                 <StackPanel Grid.Column="1"
                             VerticalAlignment="Center">
 
                     <TextBlock Text="Geri qaytarılacaq miqdar"
-                               Foreground="#999999"
+                               Foreground="#667085"
                                FontSize="13"
                                Margin="0,0,0,5"/>
 
                     <TextBox Name="txtQaytarmaMiqdar"
                              Text="1"
                              Height="40"
-                             Background="#252525"
-                             Foreground="White"
-                             BorderBrush="#E67E22"
+                             Background="#FFFFFF"
+                             Foreground="#263238"
+                             BorderBrush="#D0D5DD"
                              BorderThickness="1"
                              FontSize="18"
                              Padding="8"
@@ -470,24 +492,22 @@
 
                 </StackPanel>
 
-
                 <!-- GERİ QAYTAR -->
-
                 <Button Grid.Column="2"
                         Name="btnGeriQaytar"
                         Content="↩ GERİ QAYTAR"
                         Height="50"
                         Margin="15,10,0,0"
-                        Background="#E67E22"
+                        Background="#D96B16"
                         Foreground="White"
                         BorderThickness="0"
                         FontWeight="Bold"
                         FontSize="14"
                         Cursor="Hand"
+                        Style="{StaticResource PrimaryButtonStyle}"
                         Click="btnGeriQaytar_Click"/>
 
             </Grid>
-
         </Border>
 
     </Grid>

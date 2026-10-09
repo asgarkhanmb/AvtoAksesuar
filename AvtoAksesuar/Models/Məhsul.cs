@@ -9,5 +9,7 @@ namespace PcKod.UI.Models
         public decimal SatisQiymeti { get; set; }
         public int VahidNovu { get; set; }
         public decimal StokMiqdar { get; set; }
+          public string VahidMetni =>
+            VahidNovu == 1 ? "Kq" : "Ədəd";
     }
 }   

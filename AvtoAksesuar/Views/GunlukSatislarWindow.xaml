@@ -7,7 +7,7 @@
         MinHeight="600"
         MinWidth="950"
         WindowStartupLocation="CenterScreen"
-        Background="#121212">
+        Background="#F4F6F9">
 
     <Grid Margin="15">
 
@@ -17,345 +17,294 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-
-        <!-- ===================================================== -->
         <!-- BAŞLIQ -->
-        <!-- ===================================================== -->
-
         <Border Grid.Row="0"
-                Background="#1E1E1E"
-                BorderBrush="#00FF41"
+                Background="White"
+                BorderBrush="#DDE2E8"
                 BorderThickness="1"
                 CornerRadius="8"
                 Padding="15"
                 Margin="0,0,0,10">
 
             <Grid>
-
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-
                 <StackPanel>
-
-                    <TextBlock Text="🧾 ÇEKLƏR / GÜNDƏLİK SATIŞLAR"
-                               Foreground="#00FF41"
+                    <TextBlock Text="ÇEKLƏR / GÜNDƏLİK SATIŞLAR"
+                               Foreground="#2E7D32"
                                FontSize="22"
                                FontWeight="Bold"/>
 
                     <TextBlock Name="txtGun"
-                               Foreground="#AAAAAA"
+                               Foreground="#667085"
                                FontSize="13"
                                Margin="0,5,0,0"/>
-
                 </StackPanel>
-
 
                 <Button Grid.Column="1"
                         Name="btnYenile"
-                        Content="🔄 YENİLƏ"
+                        Content="YENİLƏ"
                         Width="110"
                         Height="38"
-                        Background="#333333"
-                        Foreground="White"
-                        BorderThickness="0"
+                        Background="#E8F5E9"
+                        Foreground="#2E7D32"
+                        BorderBrush="#C8E6C9"
+                        BorderThickness="1"
                         FontWeight="Bold"
                         Click="btnYenile_Click"
                         Cursor="Hand"/>
-
             </Grid>
-
         </Border>
 
-
-        <!-- ===================================================== -->
-        <!-- SATIŞLAR -->
-        <!-- ===================================================== -->
-
+        <!-- GÜNDƏLİK SATIŞLAR -->
         <DataGrid Grid.Row="1"
                   Name="dgGunlukSatislar"
                   AutoGenerateColumns="False"
-                  Background="#1E1E1E"
-                  Foreground="White"
-                  RowBackground="#1E1E1E"
-                  AlternatingRowBackground="#252525"
-                  BorderThickness="0"
-                  GridLinesVisibility="Horizontal"
-                  HorizontalGridLinesBrush="#333"
+                  Background="White"
+                  Foreground="#263238"
+                  RowBackground="White"
+                  AlternatingRowBackground="White"
+                  BorderBrush="#DDE2E8"
+                  BorderThickness="1"
+                  GridLinesVisibility="All"
+                  HorizontalGridLinesBrush="#E5E7EB"
+                  VerticalGridLinesBrush="#E5E7EB"
                   HeadersVisibility="Column"
                   CanUserAddRows="False"
                   CanUserDeleteRows="False"
                   CanUserReorderColumns="False"
+                  CanUserResizeRows="False"
                   SelectionMode="Single"
                   SelectionUnit="FullRow"
-                  FontSize="15"
+                  FontSize="14"
+                  RowHeight="45"
+                  ColumnHeaderHeight="45"
                   CellEditEnding="dgGunlukSatislar_CellEditEnding"
-                  SelectionChanged="dgGunlukSatislar_SelectionChanged">
+                  SelectionChanged="dgGunlukSatislar_SelectionChanged"
+                  IsReadOnly="False">
 
             <DataGrid.Resources>
 
-                <!-- ================================================= -->
-                <!-- HEADER -->
-                <!-- ================================================= -->
-
-                <Style TargetType="DataGridColumnHeader">
-
-                    <Setter Property="Background"
-                            Value="#252525"/>
-
-                    <Setter Property="Foreground"
-                            Value="#00FF41"/>
-
-                    <Setter Property="FontWeight"
-                            Value="Bold"/>
-
-                    <Setter Property="Padding"
-                            Value="10"/>
-
-                    <Setter Property="HorizontalContentAlignment"
-                            Value="Center"/>
-
+                <!-- SÜTUN BAŞLIQLARI -->
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background" Value="#E8EDF3"/>
+                    <Setter Property="Foreground" Value="#263238"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="FontSize" Value="13"/>
+                    <Setter Property="Padding" Value="8"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="BorderBrush" Value="#DDE2E8"/>
+                    <Setter Property="BorderThickness" Value="0,0,1,1"/>
                 </Style>
 
-
-                <!-- ================================================= -->
-                <!-- CELL -->
-                <!-- ================================================= -->
-
-                <Style TargetType="DataGridCell">
-
-                    <Setter Property="Foreground"
-                            Value="White"/>
-
-                    <Setter Property="Padding"
-                            Value="8"/>
-
-                    <Setter Property="Background"
-                            Value="Transparent"/>
-
-                    <Setter Property="BorderThickness"
-                            Value="0"/>
-
-                </Style>
-
-
-                <!-- ================================================= -->
-                <!-- ROW -->
-                <!-- ================================================= -->
-
-                <Style TargetType="DataGridRow">
-
-                    <Setter Property="Background"
-                            Value="#1E1E1E"/>
-
-                    <Setter Property="Foreground"
-                            Value="White"/>
+                <!-- XANALAR -->
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Setter Property="Foreground" Value="#263238"/>
+                    <Setter Property="Background" Value="White"/>
+                    <Setter Property="Padding" Value="8,4"/>
+                    <Setter Property="BorderBrush" Value="#E5E7EB"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
 
                     <Style.Triggers>
 
-                        <Trigger Property="IsSelected"
-                                 Value="True">
-
-                            <Setter Property="Background"
-                                    Value="#3A2630"/>
-
-                            <Setter Property="Foreground"
-                                    Value="White"/>
-
+                        <!-- SEÇİLMİŞ XANA -->
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#C8E6C9"/>
+                            <Setter Property="Foreground" Value="#1B5E20"/>
                         </Trigger>
 
                     </Style.Triggers>
+                </Style>
 
+                <!-- SƏTİRLƏR -->
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Setter Property="Background" Value="White"/>
+                    <Setter Property="Foreground" Value="#263238"/>
+                    <Setter Property="Height" Value="45"/>
+                    <Setter Property="MinHeight" Value="45"/>
+                    <Setter Property="BorderBrush" Value="#E5E7EB"/>
+                    <Setter Property="BorderThickness" Value="0,0,0,1"/>
+
+                    <Style.Triggers>
+
+                        <!-- SİÇAN SƏTİRİN ÜZƏRİNƏ GƏLƏNDƏ -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#E8F5E9"/>
+                            <Setter Property="Foreground" Value="#1B5E20"/>
+                        </Trigger>
+
+                        <!-- SƏTİR SEÇİLƏNDƏ -->
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#C8E6C9"/>
+                            <Setter Property="Foreground" Value="#1B5E20"/>
+                        </Trigger>
+
+                    </Style.Triggers>
+                </Style>
+
+                <!-- MƏLUMATLAR MƏRKƏZDƏ -->
+                <Style x:Key="CenteredTextStyle"
+                       TargetType="{x:Type TextBlock}">
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="TextAlignment" Value="Center"/>
+                    <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                </Style>
+
+                <!-- QİYMƏT REDAKTƏSİ MƏRKƏZDƏ -->
+                <Style x:Key="CenteredEditingStyle"
+                       TargetType="{x:Type TextBox}">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="TextAlignment" Value="Center"/>
+                    <Setter Property="Padding" Value="2"/>
+                </Style>
+
+                <!-- ÇEK DÜYMƏSİ -->
+                <Style x:Key="ReceiptButtonStyle"
+                       TargetType="{x:Type Button}">
+                    <Setter Property="Height" Value="32"/>
+                    <Setter Property="Width" Value="90"/>
+                    <Setter Property="Background" Value="#E3F2FD"/>
+                    <Setter Property="Foreground" Value="#1565C0"/>
+                    <Setter Property="BorderBrush" Value="#BBDEFB"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="Cursor" Value="Hand"/>
                 </Style>
 
             </DataGrid.Resources>
 
-
             <DataGrid.Columns>
 
-
-                <!-- ================================================= -->
                 <!-- № -->
-                <!-- ================================================= -->
-
                 <DataGridTextColumn Header="№"
                                     Binding="{Binding Id}"
                                     Width="60"
-                                    IsReadOnly="True"/>
+                                    IsReadOnly="True"
+                                    ElementStyle="{StaticResource CenteredTextStyle}"/>
 
-
-                <!-- ================================================= -->
-                <!-- TARİX -->
-                <!-- ================================================= -->
-
+                <!-- TARİX / SAAT -->
                 <DataGridTextColumn Header="Tarix / Saat"
                                     Binding="{Binding Tarix}"
                                     Width="160"
-                                    IsReadOnly="True"/>
+                                    IsReadOnly="True"
+                                    ElementStyle="{StaticResource CenteredTextStyle}"/>
 
-
-                <!-- ================================================= -->
                 <!-- MƏHSUL -->
-                <!-- ================================================= -->
-
                 <DataGridTextColumn Header="Məhsul"
                                     Binding="{Binding UrunAdi}"
                                     Width="2*"
-                                    IsReadOnly="True"/>
+                                    IsReadOnly="True"
+                                    ElementStyle="{StaticResource CenteredTextStyle}"/>
 
-
-                <!-- ================================================= -->
                 <!-- MİQDAR -->
-                <!-- ================================================= -->
-
                 <DataGridTextColumn Header="Miqdar"
                                     Binding="{Binding Miktar, StringFormat={}{0:N2}}"
                                     Width="100"
-                                    IsReadOnly="True"/>
+                                    IsReadOnly="True"
+                                    ElementStyle="{StaticResource CenteredTextStyle}"/>
 
-
-                <!-- ================================================= -->
                 <!-- VAHİD -->
-                <!-- ================================================= -->
-
                 <DataGridTextColumn Header="Vahid"
                                     Binding="{Binding BirimMetni}"
                                     Width="90"
-                                    IsReadOnly="True"/>
+                                    IsReadOnly="True"
+                                    ElementStyle="{StaticResource CenteredTextStyle}"/>
 
-
-                <!-- ================================================= -->
                 <!-- VAHİD QİYMƏTİ -->
-                <!-- YALNIZ BU SÜTUN DƏYİŞƏ BİLƏR -->
-                <!-- ================================================= -->
-
                 <DataGridTextColumn Header="Vahid qiyməti"
                                     Width="140"
-                                    IsReadOnly="False">
-
+                                    IsReadOnly="False"
+                                    ElementStyle="{StaticResource CenteredTextStyle}"
+                                    EditingElementStyle="{StaticResource CenteredEditingStyle}">
                     <DataGridTextColumn.Binding>
-
                         <Binding Path="BirimFiyat"
                                  Mode="TwoWay"
                                  UpdateSourceTrigger="LostFocus"
                                  StringFormat="{}{0:N2}"/>
-
                     </DataGridTextColumn.Binding>
-
                 </DataGridTextColumn>
 
-
-                <!-- ================================================= -->
                 <!-- ÜMUMİ MƏBLƏĞ -->
-                <!-- ================================================= -->
-
                 <DataGridTextColumn Header="Məbləğ"
                                     Binding="{Binding ToplamTutar, StringFormat={}{0:N2} AZN}"
                                     Width="140"
-                                    IsReadOnly="True"/>
+                                    IsReadOnly="True"
+                                    ElementStyle="{StaticResource CenteredTextStyle}"/>
 
-
-                <!-- ================================================= -->
                 <!-- ÖDƏNİŞ -->
-                <!-- ================================================= -->
-
                 <DataGridTextColumn Header="Ödəniş"
                                     Binding="{Binding OdemeYontemi}"
                                     Width="110"
-                                    IsReadOnly="True"/>
+                                    IsReadOnly="True"
+                                    ElementStyle="{StaticResource CenteredTextStyle}"/>
 
-
-                <!-- ================================================= -->
                 <!-- ÇEK -->
-                <!-- ================================================= -->
-
-                <DataGridTemplateColumn Header="Çek"
-                                        Width="120">
-
+                <DataGridTemplateColumn Header="Çek" Width="120">
                     <DataGridTemplateColumn.CellTemplate>
-
                         <DataTemplate>
-
-                            <Button Content="🧾 ÇEK"
-                                    Height="32"
-                                    Width="90"
-                                    Background="#3498DB"
-                                    Foreground="White"
-                                    BorderThickness="0"
-                                    FontWeight="Bold"
-                                    Click="btnCek_Click"
-                                    Cursor="Hand"/>
-
+                            <Button Content="ÇEK"
+                                    Style="{StaticResource ReceiptButtonStyle}"
+                                    Click="btnCek_Click"/>
                         </DataTemplate>
-
                     </DataGridTemplateColumn.CellTemplate>
-
                 </DataGridTemplateColumn>
 
             </DataGrid.Columns>
-
         </DataGrid>
 
-
-        <!-- ===================================================== -->
         <!-- AŞAĞI PANEL -->
-        <!-- ===================================================== -->
-
         <Border Grid.Row="2"
-                Background="#1E1E1E"
-                BorderBrush="#333"
+                Background="White"
+                BorderBrush="#DDE2E8"
                 BorderThickness="1"
                 CornerRadius="8"
                 Padding="12"
                 Margin="0,10,0,0">
 
             <Grid>
-
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-
-                <!-- ================================================= -->
-                <!-- GÜNDƏLİK ÜMUMİ -->
-                <!-- ================================================= -->
-
-                <StackPanel>
-
+                <!-- GÜNDƏLİK ÜMUMİ SATIŞ -->
+                <StackPanel VerticalAlignment="Center">
                     <TextBlock Text="GÜNLÜK ÜMUMİ SATIŞ"
-                               Foreground="#A0A0A0"
-                               FontSize="12"/>
+                               Foreground="#667085"
+                               FontSize="12"
+                               FontWeight="SemiBold"/>
 
                     <TextBlock Name="txtGunlukCem"
                                Text="0,00 AZN"
-                               Foreground="#00FF41"
+                               Foreground="#2E7D32"
                                FontSize="25"
-                               FontWeight="Bold"/>
-
+                               FontWeight="Bold"
+                               Margin="0,3,0,0"/>
                 </StackPanel>
 
-
-                <!-- ================================================= -->
-                <!-- ÇAP -->
-                <!-- ================================================= -->
-
+                <!-- SEÇİLMİŞ ÇEKİ ÇAP ET -->
                 <Button Grid.Column="1"
                         Name="btnCekCapEt"
-                        Content="🖨 SEÇİLMİŞ ÇEKİ ÇAP ET"
+                        Content="SEÇİLMİŞ ÇEKİ ÇAP ET"
                         Width="190"
                         Height="42"
-                        Background="#27AE60"
+                        Background="#2E7D32"
                         Foreground="White"
                         BorderThickness="0"
                         FontWeight="Bold"
                         Click="btnCekCapEt_Click"
                         Cursor="Hand"/>
-
             </Grid>
-
         </Border>
 
     </Grid>

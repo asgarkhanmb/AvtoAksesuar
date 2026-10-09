@@ -5,7 +5,7 @@
         Height="750"
         Width="1200"
         WindowStartupLocation="CenterScreen"
-        Background="#121212">
+        Background="White">
 
     <Window.Resources>
 
@@ -48,7 +48,6 @@
 
     </Window.Resources>
 
-
     <Grid Margin="15">
 
         <Grid.RowDefinitions>
@@ -57,9 +56,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-
         <!-- BAŞLIQ -->
-
         <Grid Grid.Row="0"
               Margin="0,0,0,15">
 
@@ -71,12 +68,12 @@
             <StackPanel>
 
                 <TextBlock Text="📈 SATIŞ HESABATLARI"
-                           Foreground="#00FF41"
+                           Foreground="Black"
                            FontSize="28"
                            FontWeight="Bold"/>
 
                 <TextBlock Text="Satış məlumatlarını tarix və ödəniş növünə görə analiz edin"
-                           Foreground="#888"
+                           Foreground="#555555"
                            FontSize="13"
                            Margin="0,5,0,0"/>
 
@@ -87,19 +84,17 @@
                     Content="← GERİ QAYIT"
                     Width="130"
                     Height="40"
-                    Background="#333"
+                    Background="#333333"
                     Foreground="White"
-                    BorderBrush="#555"
+                    BorderBrush="#555555"
                     Click="btnGeri_Click"/>
 
         </Grid>
 
-
         <!-- FILTER -->
-
         <Border Grid.Row="1"
-                Background="#1E1E1E"
-                BorderBrush="#333"
+                Background="White"
+                BorderBrush="#D0D0D0"
                 BorderThickness="1"
                 CornerRadius="8"
                 Padding="15"
@@ -108,33 +103,23 @@
             <Grid>
 
                 <Grid.ColumnDefinitions>
-
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="165"/>
-
                     <ColumnDefinition Width="25"/>
-
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="165"/>
-
                     <ColumnDefinition Width="25"/>
-
                     <ColumnDefinition Width="165"/>
                     <ColumnDefinition Width="10"/>
-
                     <ColumnDefinition Width="165"/>
                     <ColumnDefinition Width="*"/>
-
                     <ColumnDefinition Width="Auto"/>
-
                 </Grid.ColumnDefinitions>
 
-
                 <!-- BAŞLANĞIC TARİXİ -->
-
                 <TextBlock Grid.Column="0"
                            Text="Başlanğıc:"
-                           Foreground="#A0A0A0"
+                           Foreground="#333333"
                            VerticalAlignment="Center"
                            Margin="0,0,8,0"/>
 
@@ -142,12 +127,10 @@
                             Name="dpBaslangic"
                             Height="42"/>
 
-
                 <!-- BİTİŞ TARİXİ -->
-
                 <TextBlock Grid.Column="3"
                            Text="Bitmə:"
-                           Foreground="#A0A0A0"
+                           Foreground="#333333"
                            VerticalAlignment="Center"
                            Margin="0,0,8,0"/>
 
@@ -155,9 +138,7 @@
                             Name="dpBitis"
                             Height="42"/>
 
-
                 <!-- ÖDƏNİŞ NÖVÜ -->
-
                 <ComboBox Grid.Column="6"
                           Name="cmbOdemeTipi"
                           Height="42"
@@ -165,16 +146,12 @@
                           VerticalContentAlignment="Center">
 
                     <ComboBoxItem Content="Bütün ödənişlər"/>
-
                     <ComboBoxItem Content="Nəğd"/>
-
                     <ComboBoxItem Content="Kart"/>
 
                 </ComboBox>
 
-
                 <!-- HESABATI GÖSTƏR -->
-
                 <Button Grid.Column="8"
                         Name="btnHesabatGoster"
                         Content="🔎 HESABATI GÖSTƏR"
@@ -184,15 +161,13 @@
                         FontWeight="Bold"
                         Click="btnHesabatGoster_Click"/>
 
-
                 <!-- EXCEL -->
-
                 <Button Grid.Column="10"
                         Name="btnExcel"
                         Content="📊 EXCEL"
                         Width="100"
                         Height="42"
-                        Background="#27AE60"
+                        Background="#218838"
                         Foreground="White"
                         FontWeight="Bold"
                         Click="btnExcel_Click"/>
@@ -201,51 +176,36 @@
 
         </Border>
 
-
         <!-- ƏSAS HİSSƏ -->
-
         <Grid Grid.Row="2">
 
             <Grid.RowDefinitions>
-
                 <RowDefinition Height="130"/>
                 <RowDefinition Height="*"/>
-
             </Grid.RowDefinitions>
 
-
             <!-- STATİSTİKA KARTLARI -->
-
             <Grid Grid.Row="0"
                   Margin="0,0,0,15">
 
                 <Grid.ColumnDefinitions>
-
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="12"/>
-
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="12"/>
-
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="12"/>
-
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="12"/>
-
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="12"/>
-
                     <ColumnDefinition Width="*"/>
-
                 </Grid.ColumnDefinitions>
 
-
                 <!-- ÜMUMİ SATIŞ -->
-
                 <Border Grid.Column="0"
-                        Background="#1E1E1E"
-                        BorderBrush="#00FF41"
+                        Background="White"
+                        BorderBrush="#2E7D32"
                         BorderThickness="1"
                         CornerRadius="8"
                         Padding="15">
@@ -253,12 +213,12 @@
                     <StackPanel>
 
                         <TextBlock Text="💰 ÜMUMİ SATIŞ"
-                                   Foreground="#888"
+                                   Foreground="#555555"
                                    FontSize="13"/>
 
                         <TextBlock Name="txtUmumiSatis"
                                    Text="0.00 ₼"
-                                   Foreground="#00FF41"
+                                   Foreground="#2E7D32"
                                    FontSize="24"
                                    FontWeight="Bold"
                                    Margin="0,8,0,0"/>
@@ -267,11 +227,9 @@
 
                 </Border>
 
-
                 <!-- NƏĞD SATIŞ -->
-
                 <Border Grid.Column="2"
-                        Background="#1E1E1E"
+                        Background="White"
                         BorderBrush="#28A745"
                         BorderThickness="1"
                         CornerRadius="8"
@@ -280,7 +238,7 @@
                     <StackPanel>
 
                         <TextBlock Text="💵 NƏĞD SATIŞ"
-                                   Foreground="#888"
+                                   Foreground="#555555"
                                    FontSize="13"/>
 
                         <TextBlock Name="txtNagdSatis"
@@ -294,11 +252,9 @@
 
                 </Border>
 
-
                 <!-- KART SATIŞI -->
-
                 <Border Grid.Column="4"
-                        Background="#1E1E1E"
+                        Background="White"
                         BorderBrush="#2980B9"
                         BorderThickness="1"
                         CornerRadius="8"
@@ -307,7 +263,7 @@
                     <StackPanel>
 
                         <TextBlock Text="💳 KART SATIŞI"
-                                   Foreground="#888"
+                                   Foreground="#555555"
                                    FontSize="13"/>
 
                         <TextBlock Name="txtKartSatis"
@@ -321,11 +277,9 @@
 
                 </Border>
 
-
                 <!-- XALİS GƏLİR -->
-
                 <Border Grid.Column="6"
-                        Background="#1E1E1E"
+                        Background="White"
                         BorderBrush="#9B59B6"
                         BorderThickness="1"
                         CornerRadius="8"
@@ -334,7 +288,7 @@
                     <StackPanel>
 
                         <TextBlock Text="📈 XALİS GƏLİR"
-                                   Foreground="#888"
+                                   Foreground="#555555"
                                    FontSize="13"/>
 
                         <TextBlock Name="txtXalisGelir"
@@ -348,11 +302,9 @@
 
                 </Border>
 
-
-                <!-- ÜMUMİ XİDMƏT SATIŞI -->
-
+                <!-- XİDMƏT SATIŞI -->
                 <Border Grid.Column="8"
-                        Background="#1E1E1E"
+                        Background="White"
                         BorderBrush="#E67E22"
                         BorderThickness="1"
                         CornerRadius="8"
@@ -361,7 +313,7 @@
                     <StackPanel>
 
                         <TextBlock Text="🔧 XİDMƏT SATIŞI"
-                                   Foreground="#888"
+                                   Foreground="#555555"
                                    FontSize="13"/>
 
                         <TextBlock Name="txtUmumiXidmetSatisi"
@@ -375,11 +327,9 @@
 
                 </Border>
 
-
                 <!-- SATIŞ SAYI -->
-
                 <Border Grid.Column="10"
-                        Background="#1E1E1E"
+                        Background="White"
                         BorderBrush="#F39C12"
                         BorderThickness="1"
                         CornerRadius="8"
@@ -388,7 +338,7 @@
                     <StackPanel>
 
                         <TextBlock Text="🧾 SATIŞ SAYI"
-                                   Foreground="#888"
+                                   Foreground="#555555"
                                    FontSize="13"/>
 
                         <TextBlock Name="txtSatisSayi"
@@ -404,25 +354,19 @@
 
             </Grid>
 
-
             <!-- CƏDVƏLLƏR -->
-
             <Grid Grid.Row="1">
 
                 <Grid.ColumnDefinitions>
-
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="15"/>
                     <ColumnDefinition Width="1*"/>
-
                 </Grid.ColumnDefinitions>
 
-
                 <!-- SATIŞLAR -->
-
                 <Border Grid.Column="0"
-                        Background="#1E1E1E"
-                        BorderBrush="#333"
+                        Background="White"
+                        BorderBrush="#D0D0D0"
                         BorderThickness="1"
                         CornerRadius="8"
                         Padding="10">
@@ -430,32 +374,28 @@
                     <Grid>
 
                         <Grid.RowDefinitions>
-
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
-
                         </Grid.RowDefinitions>
-
 
                         <TextBlock Grid.Row="0"
                                    Text="📋 SATIŞLAR"
-                                   Foreground="#00FF41"
+                                   Foreground="Black"
                                    FontSize="18"
                                    FontWeight="Bold"
                                    Margin="5,0,0,10"/>
-
 
                         <DataGrid x:Name="dgSatislar"
                                   Grid.Row="1"
                                   Margin="10"
                                   AutoGenerateColumns="False"
-                                  Background="#1E1E1E"
-                                  Foreground="White"
-                                  RowBackground="#1E1E1E"
-                                  AlternatingRowBackground="#252525"
+                                  Background="White"
+                                  Foreground="Black"
+                                  RowBackground="White"
+                                  AlternatingRowBackground="#F2F2F2"
                                   BorderThickness="0"
                                   GridLinesVisibility="Horizontal"
-                                  HorizontalGridLinesBrush="#333"
+                                  HorizontalGridLinesBrush="#D9D9D9"
                                   HeadersVisibility="Column"
                                   FontSize="13">
 
@@ -464,10 +404,10 @@
                                 <Style TargetType="DataGridColumnHeader">
 
                                     <Setter Property="Background"
-                                            Value="#252525"/>
+                                            Value="#EEEEEE"/>
 
                                     <Setter Property="Foreground"
-                                            Value="#00FF41"/>
+                                            Value="#2E7D32"/>
 
                                     <Setter Property="FontWeight"
                                             Value="Bold"/>
@@ -477,11 +417,10 @@
 
                                 </Style>
 
-
                                 <Style TargetType="DataGridCell">
 
                                     <Setter Property="Foreground"
-                                            Value="White"/>
+                                            Value="Black"/>
 
                                     <Setter Property="Padding"
                                             Value="6"/>
@@ -490,44 +429,33 @@
 
                             </DataGrid.Resources>
 
-
                             <DataGrid.Columns>
 
                                 <DataGridTextColumn Header="№"
                                                     Binding="{Binding Id}"
                                                     Width="Auto"/>
 
-
                                 <!-- TARİX + SAAT -->
-
                                 <DataGridTextColumn Header="Tarix / Saat"
                                                     Binding="{Binding Tarix, StringFormat='dd.MM.yyyy HH:mm'}"
                                                     Width="150"/>
 
-
                                 <!-- MƏHSUL -->
-
                                 <DataGridTextColumn Header="Məhsulun adı"
                                                     Binding="{Binding UrunAdi}"
                                                     Width="*"/>
 
-
                                 <!-- MİQDAR -->
-
                                 <DataGridTextColumn Header="Miqdar"
                                                     Binding="{Binding Miktar}"
                                                     Width="80"/>
 
-
                                 <!-- ÖDƏNİŞ -->
-
                                 <DataGridTextColumn Header="Ödəniş növü"
                                                     Binding="{Binding OdemeTipi}"
                                                     Width="100"/>
 
-
                                 <!-- MƏBLƏĞ -->
-
                                 <DataGridTextColumn Header="Ümumi məbləğ"
                                                     Binding="{Binding Toplam, StringFormat='\{0:N2\} ₼'}"
                                                     Width="110"/>
@@ -540,12 +468,10 @@
 
                 </Border>
 
-
                 <!-- ƏN ÇOX SATILAN MƏHSULLAR -->
-
                 <Border Grid.Column="2"
-                        Background="#1E1E1E"
-                        BorderBrush="#333"
+                        Background="White"
+                        BorderBrush="#D0D0D0"
                         BorderThickness="1"
                         CornerRadius="8"
                         Padding="10">
@@ -553,12 +479,9 @@
                     <Grid>
 
                         <Grid.RowDefinitions>
-
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
-
                         </Grid.RowDefinitions>
-
 
                         <TextBlock Grid.Row="0"
                                    Text="🏆 ƏN ÇOX SATILAN MƏHSULLAR"
@@ -567,17 +490,16 @@
                                    FontWeight="Bold"
                                    Margin="5,0,0,10"/>
 
-
                         <DataGrid Grid.Row="1"
                                   Name="dgMehsullar"
                                   AutoGenerateColumns="False"
-                                  Background="#1E1E1E"
-                                  Foreground="White"
-                                  RowBackground="#1E1E1E"
-                                  AlternatingRowBackground="#252525"
+                                  Background="White"
+                                  Foreground="Black"
+                                  RowBackground="White"
+                                  AlternatingRowBackground="#F2F2F2"
                                   BorderThickness="0"
                                   GridLinesVisibility="Horizontal"
-                                  HorizontalGridLinesBrush="#333"
+                                  HorizontalGridLinesBrush="#D9D9D9"
                                   HeadersVisibility="Column"
                                   FontSize="13">
 
@@ -586,7 +508,7 @@
                                 <Style TargetType="DataGridColumnHeader">
 
                                     <Setter Property="Background"
-                                            Value="#252525"/>
+                                            Value="#EEEEEE"/>
 
                                     <Setter Property="Foreground"
                                             Value="#F39C12"/>
@@ -599,11 +521,10 @@
 
                                 </Style>
 
-
                                 <Style TargetType="DataGridCell">
 
                                     <Setter Property="Foreground"
-                                            Value="White"/>
+                                            Value="Black"/>
 
                                     <Setter Property="Padding"
                                             Value="6"/>
@@ -611,7 +532,6 @@
                                 </Style>
 
                             </DataGrid.Resources>
-
 
                             <DataGrid.Columns>
 

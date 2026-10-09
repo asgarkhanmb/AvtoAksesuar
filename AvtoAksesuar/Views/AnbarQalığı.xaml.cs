@@ -75,11 +75,11 @@ namespace PcKod.UI.Views
                     cmd.Parameters.AddWithValue("@b", _activeBarcode);
                     cmd.ExecuteNonQuery();
                 }
-                MessageBox.Show("Stok envanteri güncellendi.", "Başarılı");
+                MessageBox.Show("Stoka uğurla əlavə edildi.", "Uğurlu");
                 ResetView();
                 SyncInventory();
             }
-            else MessageBox.Show("Geçerli bir miktar girin.");
+            else MessageBox.Show("Düzgün bir miqdar daxil edin.");
         }
 
         private void ResetView() { txtStokAra.Clear(); txtSeciliUrun.Clear(); txtMevcutStok.Clear(); txtYeniStok.Clear(); _activeBarcode = ""; }
